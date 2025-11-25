@@ -16,7 +16,6 @@
 
 <body>
 
-  <!-- NAVBAR -->
   <div class="site-nav">
     <div class="inner">
 
@@ -55,12 +54,10 @@
     </div>
   </div>
 
-  <!-- PRODUCT SECTION -->
   <div id="productDisplay" class="product-section">
     <p>Loading product...</p>
   </div>
 
-  <!-- CONTACT SECTION -->
   <section id="contact" class="contact fade-left">
     <div style="max-width:1000px;margin:auto;">
       <h2>Get in Touch</h2>
@@ -94,7 +91,6 @@
       </div>
     </div>
   </section>
-  <div id="toast" class="toast">Saree added to cart</div>
 
   <footer>© <span id="year"></span> Rudhvi Vastraa — All rights reserved</footer>
 
@@ -113,7 +109,6 @@
       container.innerHTML = `
   <div class="product-wrapper">
 
-    <!-- LEFT SIDE IMAGE GALLERY -->
     <div class="product-gallery">
       <img id="mainImage" class="main-img" src="${product.images ? product.images[0] : product.image}">
 
@@ -124,7 +119,6 @@
       </div>
     </div>
 
-    <!-- RIGHT SIDE PRODUCT DETAILS -->
     <div class="product-info">
 
       <h1 class="p-title">${product.name}</h1>
@@ -173,18 +167,28 @@
 
       localStorage.setItem("cart", JSON.stringify(cart));
 
-      updateCartCount();   // 🔥 UPDATE CART ICON
+      updateCartCount();
+      // This will now show the message ONLY when this button is clicked
       showToast(item.name + " added to cart!");
     }
 
-
+    // --- UPDATED DYNAMIC TOAST FUNCTION ---
     function showToast(msg) {
-      const toast = document.getElementById("toast");
-      toast.textContent = msg;
-      toast.classList.add("show");
+      // 1. Remove existing toast to prevent overlap
+      const existing = document.getElementById("toast");
+      if (existing) existing.remove();
 
+      // 2. Create the element dynamically
+      const t = document.createElement('div');
+      t.className = 'toast show'; 
+      t.id = 'toast';             
+      t.textContent = msg;
+      
+      document.body.appendChild(t);
+
+      // 3. Remove it after 2.2 seconds
       setTimeout(() => {
-        toast.classList.remove("show");
+        t.remove();
       }, 2200);
     }
 
@@ -193,6 +197,7 @@
       const count = cart.reduce((sum, item) => sum + item.qty, 0);
       document.getElementById("cartCount").textContent = count;
     }
+    
     function toggleMobileMenu() {
       const menu = document.getElementById("mobileMenu");
       menu.style.display = menu.style.display === "block" ? "none" : "block";
@@ -243,6 +248,11 @@
         arrow.style.transform = "rotate(180deg)";
       }
     }
+    
+    // Ensure cart count is updated when page loads
+    window.onload = function() {
+        updateCartCount();
+    };
   </script>
 
 </body>

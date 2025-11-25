@@ -569,3 +569,31 @@ footer { text-align: center; padding: 20px; color: #777; background: #fff; borde
   }
 }
 
+
+
+/* ================================
+   GLOBAL TOAST STYLING
+================================ */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 99999;
+  opacity: 0;
+  animation: toastFade 2.5s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes toastFade {
+  0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+}

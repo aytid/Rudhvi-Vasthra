@@ -191,41 +191,43 @@
     });
 
     /* --- QR CODE GENERATION FUNCTION --- */
-    /* Moved here so it is defined before renderCart calls it */
     function generateDynamicQR() {
-      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const qrBox = document.getElementById("dynamicQRBox");
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const qrBox = document.getElementById("dynamicQRBox");
 
-      // If cart is empty or total is 0, hide QR
-      if (total <= 0) {
-        qrBox.style.display = "none";
-        return;
-      }
+  // If cart is empty or total is 0, hide QR
+  if (total <= 0) {
+    qrBox.style.display = "none";
+    return;
+  }
 
-      qrBox.style.display = "block";
-      const canvas = document.getElementById("upiQR");
+  qrBox.style.display = "block";
+  const canvas = document.getElementById("upiQR");
 
-      // UPI Info
-      const upiID = "adityathirumala20@oksbi";
-      const upiName = "Rudhvi Vastraa";
+  // UPI Info
+  const upiID = "adityathirumala20@oksbi";
+  const upiName = "Rudhvi Vastraa";
 
-      // Construct UPI Link
-      const upiLink =
-        `upi://pay?pa=${encodeURIComponent(upiID)}` +
-        `&pn=${encodeURIComponent(upiName)}` +
-        `&am=${total}` +
-        `&cu=INR`;
+  // --- NEW: Generate Label {ID+Quantity} ---
+  // This creates a string like: "ID001*2 ID005*1"
+  const label = cart.map(item => `${item.id}*${item.qty}`).join(" ");
 
-      // Generate QR
-      // Note: Since we imported QRious in the <head>, it is available here.
-      new QRious({
-        element: canvas,
-        value: upiLink,
-        size: 200,
-        level: "H"
-      });
+  // Construct UPI Link with the 'tn' (Transaction Note) parameter
+  const upiLink =
+    `upi://pay?pa=${encodeURIComponent(upiID)}` +
+    `&pn=${encodeURIComponent(upiName)}` +
+    `&am=${total}` +
+    `&cu=INR` +
+    `&tn=${encodeURIComponent(label)}`; // Added the label here
 
-    }
+  // Generate QR
+  new QRious({
+    element: canvas,
+    value: upiLink,
+    size: 200,
+    level: "H"
+  });
+}
 
     /* --- CART JS --- */
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -298,35 +300,35 @@
       document.getElementById("paymentPopup").style.display = "none";
     }
 
-    function payViaUPI() {
+function payViaUPI() {
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
 
-      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  if (!total || total <= 0) {
+    alert("Cart is empty or invalid!");
+    return;
+  }
 
-      if (!total || total <= 0) {
-        alert("Cart is empty or invalid!");
-        return;
-      }
+  const formattedTotal = total.toFixed(2);
+  const uniqueRef = "TXN" + Date.now();
 
-      const formattedTotal = total.toFixed(2);
+  const upiID = "adityathirumala20@oksbi";
+  const upiName = "Rudhvi Vastraa";
 
-      const uniqueRef = "TXN" + Date.now();
+  // --- NEW: Generate Label {ID+Quantity} ---
+  const label = cart.map(item => `${item.id}*${item.qty}`).join(" ");
 
-      const upiID = "adityathirumala20@oksbi";
-      const upiName = "Rudhvi Vastraa";
-      const note = "Payment for Order";
-      const link =
-        "upi://pay?" +
-        "pa=" + encodeURIComponent(upiID) +       // Payee Address
-        "&pn=" + encodeURIComponent(upiName) +    // Payee Name
-        "&am=" + formattedTotal +                 // Amount
-        "&cu=INR" +                               // Currency
-        "&tr=" + uniqueRef +                      // UNIQUE Transaction Ref
-        "&tn=" + encodeURIComponent(note);        // Transaction Note
+  const link =
+    "upi://pay?" +
+    "pa=" + encodeURIComponent(upiID) +       // Payee Address
+    "&pn=" + encodeURIComponent(upiName) +    // Payee Name
+    "&am=" + formattedTotal +                 // Amount
+    "&cu=INR" +                               // Currency
+    "&tr=" + uniqueRef +                      // Transaction Ref
+    "&tn=" + encodeURIComponent(label);       // Transaction Note (The IDs+Qty)
 
-      // 5. Redirect
-      window.location.href = link;
-    }
-
+  // Redirect
+  window.location.href = link;
+}
     function payViaWhatsApp() {
       const name = localStorage.getItem("userName") || "Customer";
       let msg = `Hello Rudhvi Vastraa,%0AI'm ${name}%0AOrder:%0A`;

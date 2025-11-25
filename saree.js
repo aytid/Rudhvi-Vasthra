@@ -4,15 +4,15 @@ window.sarees = [
     name:"Soft Pink Gadwal Silk",
     desc:"Pastel pink with zari buttas and contrast Kanchi border.",
     price:22500,
-    image:"pic1.jpg",
+    image:"pink-gadwal.jpg",
     soldOut:true,
 
     images: [
-      "pic1.jpg",
-      "pic2.jpg",
-      "pic3.jpg",
-      "pic4.jpg",
-      "pic5.jpg"
+      "pink-gadwal.jpg",
+      "traditional.jpg",
+      "designer.jpg",
+      "casual.jpg",
+      "pink-gadwal.jpg"
     ],
 
     maker: "Woven by expert Gadwal weavers who specialize in contrast Kanchi borders.",
@@ -30,7 +30,7 @@ window.sarees = [
     id:"RS0001",
     name:"Kanchipuram Silk",
     desc:"Elegant traditional silk saree",
-    price:12500,
+    price:1,
     image:"casual.jpg",
 
     images: [
@@ -56,7 +56,7 @@ window.sarees = [
     id:"RS0002",
     name:"Banarasi Saree",
     desc:"Classic zari woven masterpiece",
-    price:1,
+    price:2,
     image:"designer.jpg",
 
     images: [
@@ -81,7 +81,7 @@ window.sarees = [
     id:"RS0003",
     name:"Chiffon Saree",
     desc:"Lightweight and breezy",
-    price:2,
+    price:1,
     image:"traditional.jpg",
 
     images: [

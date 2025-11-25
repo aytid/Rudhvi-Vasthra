@@ -192,10 +192,15 @@
     // ];
 
 
-    function showToast(msg) {
-      const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t);
-      setTimeout(() => t.remove(), 2500);
-    }
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+
+  setTimeout(() => t.remove(), 2500);
+}
+
     function renderSarees() {
       sareeGrid.innerHTML = sarees.map((s, i) => {
         const isFav = favorites.some(f => f.id === s.id);
@@ -266,14 +271,20 @@
       renderSarees();
     }
 
-    function addToCart(i) {
-      const s = sarees[i];
-      const e = cart.find(c => c.id === s.id);
-      if (e) e.qty++; else cart.push({ ...s, qty: 1 });
-      localStorage.setItem('cart', JSON.stringify(cart));
-      updateCartCount();
-      showToast(`${s.name} added to cart`);
-    }
+function addToCart(id) {
+  const s = sarees.find(item => item.id === id);
+  if (!s) return;
+
+  let existing = cart.find(c => c.id === id);
+
+  if (existing) existing.qty++;
+  else cart.push({ ...s, qty: 1 });
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+  showToast(`${s.name} added to cart`);
+}
+
 
     function greetUser() { if (userName) greeting.innerHTML = `Hi, ${escapeHtml(userName)}!<br>Welcome to`; }
 

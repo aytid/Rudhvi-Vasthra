@@ -16,7 +16,6 @@
 
 <body>
 
-  <!-- NAVBAR -->
   <div class="site-nav">
     <div class="inner">
 
@@ -59,13 +58,11 @@
 
   </div>
 
-  <!-- PAGE TITLE -->
   <main>
     <h1>Your Favorites</h1>
     <div id="favList"></div>
   </main>
 
-  <!-- CONTACT + FOOTER -->
   <section id="contact" class="contact fade-up">
     <div style="max-width:1000px;margin:auto;">
       <h2>Get in Touch</h2>
@@ -82,9 +79,6 @@
 
   <footer>© <span id="year"></span> Rudhvi Vastraa — All rights reserved</footer>
 
-  <div id="toast" class="toast"></div>
-
-  <!-- ====================== JS SECTION ====================== -->
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -99,53 +93,35 @@
     function renderFavorites() {
       const list = document.getElementById("favList");
 
+      // Load latest favorites again
+      favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
       if (favorites.length === 0) {
-        list.innerHTML = `<p style="text-align:center;padding:40px;font-size:18px;">No favorites added yet ❤️</p>`;
-        updateCartCount();
+        list.innerHTML = `
+      <p style="text-align:center;padding:50px 0;font-size:18px;color:#777;">
+        No favorites added yet ❤️
+      </p>`;
         return;
       }
 
       list.innerHTML = favorites.map(s => `
     <div class="tile">
 
-      <!-- IMAGE -->
-      <div class="img-wrapper" style="position:relative;cursor:pointer;" 
-            onclick="window.location.href='product-details.html?id=${s.id}'">
-
-        <img src="${s.image}" alt="${s.name}" style="${s.soldOut ? 'opacity:0.6;' : ''}">
-
-        ${s.soldOut
-          ? `<span style="
-                position:absolute;
-                top:10px;
-                left:10px;
-                background:#000;
-                color:#fff;
-                font-size:12px;
-                padding:4px 8px;
-                border-radius:4px;
-              ">SOLD OUT</span>`
-          : ''
-        }
+      <div class="img-wrapper" onclick="window.location.href='product-details.html?id=${s.id}'" style="cursor:pointer;">
+        <img src="${s.image}" alt="${s.name}">
       </div>
 
-      <!-- CONTENT -->
       <div class="tile-content" onclick="window.location.href='product-details.html?id=${s.id}'" style="cursor:pointer;">
         <h3>${s.name}</h3>
-        <p class="desc">${(s.desc || "").substring(0, 50)}...</p>
+        <p class="desc">${(s.desc || '').substring(0, 50)}...</p>
         <p class="price"><strong>₹${s.price.toLocaleString('en-IN')}</strong></p>
       </div>
 
-      <!-- ACTIONS -->
       <div class="tile-actions">
-
-        ${s.soldOut
-          ? `<button class="btn-cart" disabled style="cursor:not-allowed;">Sold Out</button>`
-          : `<button class="btn-cart" onclick="addToCart('${s.id}')">Add to Cart</button>`
-        }
+        <button class="btn-cart" onclick="addToCart('${s.id}')">Add to Cart</button>
 
         <div class="fav-btn" onclick="removeFavorite('${s.id}')">
-          <svg width="24" height="24" fill="#d32f2f" viewBox="0 0 24 24">
+          <svg width="24" height="24" fill="#d32f2f">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 
               2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81
               4.5 2.09C13.09 3.81 14.76 3 16.5 3
@@ -153,8 +129,8 @@
               6.86-8.55 11.54L12 21.35z"/>
           </svg>
         </div>
-
       </div>
+
     </div>
   `).join("");
 
@@ -168,22 +144,36 @@
     }
 
     function addToCart(id) {
-      const item = favorites.find(f => f.id === id);
-      if (!item) return;
+      const s = favorites.find(item => item.id === id);
+      if (!s) return;
 
       let existing = cart.find(c => c.id === id);
-      existing ? existing.qty++ : cart.push({ ...item, qty: 1 });
+      if (existing) existing.qty++;
+      else cart.push({ ...s, qty: 1 });
 
       localStorage.setItem("cart", JSON.stringify(cart));
-      showToast("Added to cart");
       updateCartCount();
+      showToast(`${s.name} added to cart`);
     }
 
+    // --- FIXED SHOW TOAST FUNCTION ---
     function showToast(msg) {
-      const t = document.getElementById("toast");
+      // 1. Remove existing toast if present (prevents overlapping)
+      const existing = document.getElementById("toast");
+      if (existing) existing.remove();
+
+      // 2. Create the element dynamically
+      const t = document.createElement('div');
+      t.className = 'toast show'; // Add 'show' class to ensure visibility
+      t.id = 'toast';             // Add ID because your CSS likely targets #toast
       t.textContent = msg;
-      t.classList.add("show");
-      setTimeout(() => t.classList.remove("show"), 1600);
+      
+      document.body.appendChild(t);
+
+      // 3. Remove it after 3 seconds
+      setTimeout(() => {
+        t.remove();
+      }, 3000);
     }
 
     function handleSearchClick() {
@@ -214,13 +204,12 @@
       }
     });
 
-
     window.onload = () => {
-      renderFavorites();
       updateCartCount();
+      renderFavorites();
     };
-  </script>
 
+  </script>
 </body>
 
 </html>
