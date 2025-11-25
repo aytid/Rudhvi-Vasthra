@@ -17,63 +17,6 @@
 <!-- NAVBAR -->
 <div class="site-nav">
   <div class="inner">
-    <div class="hamburger" onclick="toggleMobileMenu()">☰</div>
-
-    <div class="nav-contact">
-      <div class="desktop-dropdown">
-        <div class="desktop-dropdown-header" onclick="toggleDesktopMenu()">
-          Shop By <span class="desk-arrow">⌄</span>
-        </div>
-        <div id="desktopMenu" class="desktop-menu">
-
-          <!-- TYPE -->
-          <div class="desk-group">
-            <div class="desk-group-header" onclick="toggleDeskGroup('desk-type')">
-              Type <span class="desk-arrow-small">⌄</span>
-            </div>
-            <div class="desk-group-body" id="desk-type">
-              <a href="#">Banaras</a>
-              <a href="#">Kanjivaram</a>
-              <a href="#">Printed</a>
-              <a href="#">Handloom</a>
-              <a href="#">Exclusive</a>
-              <a href="#">All Sarees</a>
-            </div>
-          </div>
-
-          <!-- OCCASION -->
-          <div class="desk-group">
-            <div class="desk-group-header" onclick="toggleDeskGroup('desk-occ')">
-              Occasion <span class="desk-arrow-small">⌄</span>
-            </div>
-            <div class="desk-group-body" id="desk-occ">
-              <a href="#">Wedding Wear</a>
-              <a href="#">Party Wear</a>
-              <a href="#">Festive Wear</a>
-              <a href="#">Reception Wear</a>
-              <a href="#">Casual Wear</a>
-            </div>
-          </div>
-
-          <!-- RANGE -->
-          <div class="desk-group">
-            <div class="desk-group-header" onclick="toggleDeskGroup('desk-range')">
-              Range <span class="desk-arrow-small">⌄</span>
-            </div>
-            <div class="desk-group-body" id="desk-range">
-              <a href="#">Under 10k</a>
-              <a href="#">Under 20k</a>
-              <a href="#">Under 30k</a>
-              <a href="#">Under 40k</a>
-              <a href="#">Above 40k</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <a href="#">Contact Us</a>
-    </div>
 
     <div class="brand">
       <img class="logo-img" src="text-logo.png" onclick="window.location.href='index.html'" alt="Rudhvi Vastraa Logo" />
@@ -107,50 +50,6 @@
     </div>
   </div>
 
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-dropdown">
-      <div class="mobile-dropdown-header" onclick="toggleDrop('drop-type')">
-        Type <span class="arrow">⌄</span>
-      </div>
-      <div id="drop-type" class="mobile-dropdown-body">
-        <a href="#">Banaras</a>
-        <a href="#">Kanjivaram</a>
-        <a href="#">Printed</a>
-        <a href="#">Handloom</a>
-        <a href="#">Exclusive</a>
-        <a href="#">All Sarees</a>
-      </div>
-    </div>
-
-    <div class="mobile-dropdown">
-      <div class="mobile-dropdown-header" onclick="toggleDrop('drop-occ')">
-        Occasion <span class="arrow">⌄</span>
-      </div>
-      <div id="drop-occ" class="mobile-dropdown-body">
-        <a href="#">Wedding Wear</a>
-        <a href="#">Party Wear</a>
-        <a href="#">Festive Wear</a>
-        <a href="#">Reception Wear</a>
-        <a href="#">Casual Wear</a>
-      </div>
-    </div>
-
-    <div class="mobile-dropdown">
-      <div class="mobile-dropdown-header" onclick="toggleDrop('drop-range')">
-        Range <span class="arrow">⌄</span>
-      </div>
-      <div id="drop-range" class="mobile-dropdown-body">
-        <a href="#">Under 10k</a>
-        <a href="#">Under 20k</a>
-        <a href="#">Under 30k</a>
-        <a href="#">Under 40k</a>
-        <a href="#">Above 40k</a>
-      </div>
-    </div>
-
-    <a href="#" class="mobile-contact">Contact Us</a>
-  </div>
 </div>
 
 <!-- PAGE TITLE -->
@@ -281,11 +180,34 @@ function showToast(msg){
   setTimeout(()=> t.classList.remove("show"), 1600);
 }
 
-function handleSearchClick(){
-  const input = document.getElementById("inlineSearch");
-  const q = input.value.trim();
-  if(q.length) window.location.href = `search.html?q=${encodeURIComponent(q)}`;
+function handleSearchClick() {
+  const searchInput = document.getElementById("inlineSearch");
+
+  // If already active → search
+  if (searchInput.classList.contains("active")) {
+    const query = searchInput.value.trim();
+    if (query.length > 0) {
+      window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+    } else {
+      searchInput.classList.remove("active");
+    }
+  } else {
+    // Activate search box
+    searchInput.classList.add("active");
+    searchInput.focus();
+  }
 }
+
+// ENTER key triggers search
+document.getElementById("inlineSearch").addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    const query = this.value.trim();
+    if (query.length > 0) {
+      window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+    }
+  }
+});
+
 
 window.onload = () => {
   renderFavorites();

@@ -204,6 +204,7 @@ h2 { font-family: "Playfair Display", serif; font-size: 34px; margin-bottom: 20p
 .cart-footer-area {
   margin-top: 40px; padding: 20px; background: #fff;
   border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); text-align: center;
+  display: flex;justify-content: space-evenly;
 }
 .payBtn {
   background: var(--primary); color: white; border: none; padding: 14px 40px;
@@ -226,6 +227,21 @@ h2 { font-family: "Playfair Display", serif; font-size: 34px; margin-bottom: 20p
 #popupBox {
   background: #fff; padding: 28px; border-radius: 10px; width: 300px;
   text-align: center; animation: popIn 0.3s ease;
+}
+#popupBox input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  margin-bottom: 18px;
+  outline: none;
+  transition: 0.2s;
+}
+
+#popupBox input:focus {
+  border-color: #E62727;
+  box-shadow: 0 0 6px rgba(230, 39, 39, 0.25);
 }
 .popupBtn {
   width: 100%; padding: 12px; background: var(--beige); margin-top: 12px;
@@ -552,3 +568,4 @@ footer { text-align: center; padding: 20px; color: #777; background: #fff; borde
     height: 90px;
   }
 }
+
