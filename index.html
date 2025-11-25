@@ -278,36 +278,55 @@
       const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t);
       setTimeout(() => t.remove(), 2500);
     }
-
 function renderSarees() {
   sareeGrid.innerHTML = sarees.map((s, i) => {
     const isFav = favorites.some(f => f.id === s.id);
     // Determine if sold out
     const isSoldOut = s.soldOut === true;
-    
-    return `
-      <div class="tile">
-        <div style="cursor:pointer;" onclick="window.location.href='product-details.html?id=${s.id}'">
-            <div style="position:relative;">
-                <img src="${s.image}" alt="${s.name}" style="${isSoldOut ? 'opacity:0.7' : ''}">
-                ${isSoldOut ? '<span style="position:absolute;top:10px;left:10px;background:#333;color:#fff;padding:4px 8px;font-size:12px;border-radius:4px;">SOLD OUT</span>' : ''}
-            </div>
-            <h3>${s.name}</h3>
-        </div>
 
-        <div class="saree-id">ID: ${s.id}</div>
-        <p>${s.desc.substring(0, 50)}...</p> 
-        <p><strong>₹${s.price.toLocaleString('en-IN')}</strong></p>
-        
-        <div class="tile-actions">
-          <button onclick="addToCart(${i})" ${isSoldOut ? 'disabled style="background:grey;cursor:not-allowed;"' : ''}>
-            ${isSoldOut ? 'Sold Out' : 'Add to Cart'}
-          </button>
-          <span class="fav-icon" onclick="toggleFavorite('${s.id}')">
-             ${isFav ? '❤️' : '🤍'} </span>
+    // SVG Definitions
+    const heartFilled = `<svg width="22" height="22" viewBox="0 0 24 24" fill="red" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>`;
+
+    const heartOutline = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+    </svg>`;
+
+/* Inside your loop (map function) */
+return `
+  <div class="tile">
+    <div style="cursor:pointer;" onclick="window.location.href='product-details.html?id=${s.id}'">
+        <div class="img-wrapper">
+            <img src="${s.image}" alt="${s.name}" style="${isSoldOut ? 'opacity:0.7' : ''}">
+            ${isSoldOut ? '<span style="position:absolute;top:10px;left:10px;background:#333;color:#fff;padding:4px 8px;font-size:12px;border-radius:4px;">SOLD OUT</span>' : ''}
         </div>
-      </div>
-    `;
+    </div>
+
+    <div class="tile-content">
+        <h3>${s.name}</h3>
+        <p class="desc">${s.desc.substring(0, 50)}...</p>
+        <p class="price"><strong>₹${s.price.toLocaleString('en-IN')}</strong></p>
+    </div>
+    
+    <div class="tile-actions">
+        <button class="btn-cart" onclick="addToCart('${s.id}')" ${isSoldOut ? 'disabled' : ''}>
+            ${isSoldOut ? 'Sold Out' : 'Add to Cart'}
+        </button>
+
+        <div class="fav-btn" onclick="toggleFavorite('${s.id}')">
+            ${isFav 
+            ? `<svg width="24" height="24" viewBox="0 0 24 24" fill="#d32f2f" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+               </svg>` 
+            : `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+               </svg>`
+            }
+        </div>
+    </div>
+  </div>
+`;
   }).join('');
 }
     function updateCartCount() {

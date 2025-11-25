@@ -725,3 +725,54 @@ footer {
     text-align-last: center;
   }
 }
+
+/* Action Bar at bottom of card */
+.tile-actions {
+  display: flex;
+  justify-content: space-between; /* Pushes items to far ends */
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #ffffff;
+  border-top: 1px solid #f0f0f0; /* Subtle separator line */
+  margin-top: auto; /* Ensures it sits at the bottom */
+}
+
+/* "Add to Cart" as clean text button */
+.btn-cart {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #1a1a1a;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem; /* 16px */
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.btn-cart:hover {
+  color: #9e2a2b; /* Changes to brand color on hover */
+  background: transparent;
+}
+
+.btn-cart:disabled {
+  color: #999;
+  cursor: not-allowed;
+}
+
+/* Heart Icon Container */
+.fav-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px; /* Increases touch area */
+  transition: transform 0.2s ease;
+}
+
+.fav-btn:hover {
+  transform: scale(1.1); /* Slight pop effect */
+  background: transparent;
+}
