@@ -334,7 +334,8 @@ function closePopup(){
 
 function payViaUPI(){
   const total = cart.reduce((s,i)=> s + i.price*i.qty, 0);
-  const link = `upi://pay?pa=adityathirumala20@oksbi&pn=Rudhvi%20Vastraa&am=${total}&cu=INR`;
+  //const link = `upi://pay?pa=adityathirumala20@oksbi&pn=Rudhvi%20Vastraa&am=${total}&cu=INR`;
+  const link = `upi://pay?pa=adityathirumala20@oksbi&pn=Rudhvi%20Vastraa&am=${total}&cu=INR&tn=Rudhvi%20Order`;
   window.location.href = link;
 }
 
