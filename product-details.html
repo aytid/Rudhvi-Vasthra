@@ -8,6 +8,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="saree.js"></script>
 </head>
 
 <body>
@@ -139,14 +140,6 @@
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 
-const sarees = [
-  {id:"16190137", name:"Soft Pink Gadwal Silk", desc:"Pastel pink with zari buttas and contrast Kanchi border.", price:22500, image:"pink-gadwal.jpg", soldOut:true},
-  {id:"RS0001", name:"Kanchipuram Silk", desc:"Elegant traditional silk saree", price:1, image:"casual.jpg"},
-  {id:"RS0002", name:"Banarasi Saree", desc:"Classic zari woven masterpiece", price:2, image:"designer.jpg"},
-  {id:"RS0003", name:"Chiffon Saree", desc:"Lightweight and breezy", price:1800, image:"traditional.jpg"},
-  {id:"RS0004", name:"Georgette Saree", desc:"Perfect for festive wear", price:2500, image:"designer.jpg"}
-];
-
 const params = new URLSearchParams(window.location.search);
 const currentId = params.get("id");
 const product = sarees.find(p => p.id === currentId);
@@ -156,34 +149,55 @@ if(!product){
   container.innerHTML = "<h2>Product not found.</h2>";
 } else {
   const sold = product.soldOut;
-
   container.innerHTML = `
-    <div class="product-image">
-      <img src="${product.image}">
+  <div class="product-wrapper">
+
+    <!-- LEFT SIDE IMAGE GALLERY -->
+    <div class="product-gallery">
+      <img id="mainImage" class="main-img" src="${product.images ? product.images[0] : product.image}">
+
+      <div class="thumb-row">
+        ${(product.images || [product.image]).map(img => `
+          <img class="thumb" src="${img}" onclick="document.getElementById('mainImage').src='${img}'">
+        `).join('')}
+      </div>
     </div>
+
+    <!-- RIGHT SIDE PRODUCT DETAILS -->
     <div class="product-info">
+
       <h1 class="p-title">${product.name}</h1>
-      <div class="p-sku">${product.id}</div>
+      <div class="p-sku">Product ID: ${product.id}</div>
 
       <div class="p-price">
         ₹${product.price.toLocaleString("en-IN")}
-        ${sold ? `<span style="background:#000;color:white;padding:4px 8px;border-radius:6px;font-size:13px;margin-left:10px;">Sold Out</span>` : ""}
+        ${product.soldOut ? `<span class="sold-badge">Sold Out</span>` : ""}
       </div>
 
       <p class="p-desc">${product.desc}</p>
 
-      ${sold ? "" : `
+      <div class="detail-box"><strong>Maker:</strong> ${product.maker || "—"}</div>
+      <div class="detail-box"><strong>Cloth Type:</strong> ${product.clothType || "—"}</div>
+      <div class="detail-box"><strong>Quality:</strong> ${product.quality || "—"}</div>
+
+      <div class="long-desc">
+        <h3>More About This Saree</h3>
+        <p>${product.more || "Full description not available."}</p>
+      </div>
+
+      ${product.soldOut ? "" : `
       <div class="qty-box">
         <label>Quantity:</label>
         <input id="qtyIn" type="number" value="1" min="1">
       </div>
-      `}
 
-      <button class="btn-buy" ${sold ? "disabled" : ""} onclick="addToCart('${product.id}')">
-        ${sold ? "Sold Out" : "Add to Cart"}
-      </button>
+      <button class="btn-buy" onclick="addToCart('${product.id}')">Add to Cart</button>
+      `}
     </div>
-  `;
+
+  </div>
+`;
+
 }
 
 function addToCart(id){

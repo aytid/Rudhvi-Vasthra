@@ -11,6 +11,7 @@
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <script src="saree.js"></script>
 </head>
 
 <body>
@@ -252,8 +253,8 @@
       <button onclick="saveUser()">Proceed</button>
     </div>
   </div>
-
   <script>
+
     const greeting = document.getElementById('greeting');
     const popup = document.getElementById('welcomePopup');
     const sareeGrid = document.getElementById('sareeGrid');
@@ -267,12 +268,13 @@
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
     // --- DATA ---
-    const sarees = [
-      { id: "RS0001", name: "Kanchipuram Silk", desc: "Elegant traditional silk saree", price: 1, image: "casual.jpg" },
-      { id: "RS0002", name: "Banarasi Saree", desc: "Classic zari woven masterpiece", price: 2, image: "designer.jpg" },
-      { id: "RS0003", name: "Chiffon Saree", desc: "Lightweight and breezy", price: 1800, image: "traditional.jpg" },
-      { id: "RS0004", name: "Georgette Saree", desc: "Perfect for festive wear", price: 2500, image: "designer.jpg" }
-    ];
+    // const sarees = [
+    //   { id: "RS0001", name: "Kanchipuram Silk", desc: "Elegant traditional silk saree", price: 1, image: "casual.jpg" },
+    //   { id: "RS0002", name: "Banarasi Saree", desc: "Classic zari woven masterpiece", price: 2, image: "designer.jpg" },
+    //   { id: "RS0003", name: "Chiffon Saree", desc: "Lightweight and breezy", price: 1800, image: "traditional.jpg" },
+    //   { id: "RS0004", name: "Georgette Saree", desc: "Perfect for festive wear", price: 2500, image: "designer.jpg" }
+    // ];
+
 
     function showToast(msg) {
       const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t);
@@ -421,14 +423,14 @@ return `
       const name = localStorage.getItem("userName") || "Customer";
       const cartData = JSON.parse(localStorage.getItem("cart")) || [];
       //if (!cartData.length) {
-        window.open(`https://wa.me/918106662341?text=Hello Rudhvi Vastraa,%0AI'm ${encodeURIComponent(name)} and I have an enquiry.`, "_blank");
+        window.open(`https://wa.me/919701343474?text=Hello Rudhvi Vastraa,%0AI'm ${encodeURIComponent(name)} and I have an enquiry.`, "_blank");
         //return;
       //}
       // let msg = `Hello Rudhvi Vastraa,%0AI'm ${encodeURIComponent(name)}. I'd like to place an order:%0A%0A`;
       // cartData.forEach(it => { msg += `🧵 ${encodeURIComponent(it.name)} (ID:${encodeURIComponent(it.id)}) x${it.qty} — ₹${it.price * it.qty}%0A`; });
       // const total = cartData.reduce((sum, i) => sum + i.price * i.qty, 0);
       // msg += `%0A💰 Total: ₹${total}%0A%0AThank you!`;
-      // window.open(`https://wa.me/918106662341?text=${msg}`, "_blank");
+      // window.open(`https://wa.me/919701343474?text=${msg}`, "_blank");
     });
 
     function escapeHtml(str) { return String(str).replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[s])); }
