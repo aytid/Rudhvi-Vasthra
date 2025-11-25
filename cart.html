@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Your Cart — Rudhvi Vasthra</title>
+  <title>Your Cart — Rudhvi Vastraa</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -525,7 +525,7 @@
       <a href="#">Contact Us</a>
     </div>
 
-    <img class="logo-img" src="text-logo.png" onclick="window.location.href='index.html'" alt="Rudhvi Vasthra Logo" />
+    <img class="logo-img" src="text-logo.png" onclick="window.location.href='index.html'" alt="Rudhvi Vastraa Logo" />
 
     <div class="nav-icons">
       <input type="text" id="inlineSearch" class="inline-search-input" placeholder="Type to search...">
@@ -629,14 +629,14 @@
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
           </svg>
-          Rudhvi Vasthra
+          Rudhvi Vastraa
         </a>
       </div>
     </div>
 </section>
 
 <footer>
-  © <span id="year"></span> Rudhvi Vasthra — All rights reserved
+  © <span id="year"></span> Rudhvi Vastraa — All rights reserved
 </footer>
 
 <div id="paymentPopup">
@@ -784,13 +784,13 @@ function closePopup(){
 
 function payViaUPI(){
   const total = cart.reduce((s,i)=> s + i.price*i.qty, 0);
-  const link = `upi://pay?pa=adityathirumala20@oksbi&pn=Rudhvi%20Vasthra&am=${total}&cu=INR`;
+  const link = `upi://pay?pa=adityathirumala20@oksbi&pn=Rudhvi%20Vastraa&am=${total}&cu=INR`;
   window.location.href = link;
 }
 
 function payViaWhatsApp(){
   const name = localStorage.getItem("userName") || "Customer";
-  let msg = `Hello Rudhvi Vasthra,%0AI'm ${name}%0AOrder:%0A`;
+  let msg = `Hello Rudhvi Vastraa,%0AI'm ${name}%0AOrder:%0A`;
 
   cart.forEach(i=>{
     msg += `${i.name} (ID:${i.id}) x${i.qty} — ₹${i.qty*i.price}%0A`;
