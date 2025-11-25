@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Product Details — Rudhvi Vastraa</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+    /* ------------------------------------
+   GLOBAL VARIABLES & BODY
+------------------------------------ */
+:root {
+  --primary: #E62727;
+  --bg-cream: #F6EFD2;
+  --text: #000;
+  --beige: #CBB89F;
+  --dark-section: #0b0d0c;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: var(--bg-cream);
+  padding-top: 80px;
+}
+
+/* ------------------------------------
+   NAVBAR (Same as cart page)
+------------------------------------ */
+.site-nav {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--beige);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+}
+
+.site-nav .inner {
+  max-width: 1200px;
+  margin: auto;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hamburger {
+  display: none;
+  font-size: 32px;
+  color: white;
+  cursor: pointer;
+}
+
+.logo-img {
+  height: 70px;
+  cursor: pointer;
+}
+
+.nav-contact a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-icons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.icon-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+  position: relative;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -14px;
+  background: var(--primary);
+  color: white;
+  width: 18px;
+  height: 18px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 600;
+  border: 2px solid var(--beige);
+}
+
+.nav-contact {
+  display: flex;
+  align-items: center;
+  gap: 20px;       /* space between Shop By and Contact Us */
+}
+
+.nav-contact a {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Search input */
+.inline-search-input {
+  width: 0;
+  opacity: 0;
+  visibility: hidden;
+  background: transparent;
+  border: 1px solid transparent;
+  color: white;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.4s ease;
+  margin-right: 5px;
+}
+
+.inline-search-input.active {
+  width: 180px;
+  opacity: 1;
+  visibility: visible;
+  border: 1px solid white;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+.inline-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ------------------------------------
+   DESKTOP DROPDOWN (Fix from screenshot)
+------------------------------------ */
+.desktop-dropdown {
+  position: relative;
+}
+
+.desktop-dropdown-header {
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+}
+
+.desk-arrow {
+  transition: 0.3s;
+}
+
+.desktop-menu {
+  display: none;                /* IMPORTANT FIX */
+  position: absolute;
+  top: 35px;
+  left: 0;
+  background: var(--beige);
+  padding: 20px;
+  width: 260px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+.desk-group {
+  margin-bottom: 12px;
+}
+
+.desk-group-header {
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+
+.desk-group-body {
+  display: none;                /* FIX: closed by default */
+  padding-left: 10px;
+}
+
+.desk-group-body a {
+  display: block;
+  color: white;
+  padding: 4px 0;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+/* ------------------------------------
+   MOBILE MENU
+------------------------------------ */
+@media(max-width: 768px) {
+  .hamburger { display: block; }
+  .nav-contact { display: none; }
+  .logo-img { height: 40px; }
+  .inline-search-input.active { width: 120px; }
+}
+
+/* ------------------------------------
+   PRODUCT DETAILS (Updated, matches cart)
+------------------------------------ */
+.product-section {
+  max-width: 1100px;
+  margin: 40px auto 180px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.product-image {
+  flex: 1 1 420px;
+}
+
+.product-image img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.product-info {
+  flex: 1 1 420px;
+  background: white;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.p-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.p-sku {
+  color: #777;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.p-price {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.p-desc {
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 30px;
+  color: #444;
+}
+
+.qty-box label { font-size: 1rem; }
+.qty-box input {
+  width: 55px;
+  padding: 6px;
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+/* Add To Cart button */
+.btn-buy {
+  width: 100%;
+  padding: 15px;
+  background: var(--primary);
+  border: none;
+  color: white;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: .3s;
+}
+
+.btn-buy:hover { background: #c41d1d; }
+.btn-buy:disabled { background: #999; }
+
+/* ------------------------------------
+   CONTACT SECTION
+------------------------------------ */
+.contact {
+  background: var(--dark-section);
+  color: white;
+  padding: 70px 20px;
+  text-align: center;
+}
+
+.contact-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 26px;
+  border-radius: 50px;
+  text-decoration: none;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  transition: 0.3s;
+  font-size: 15px;
+}
+
+.contact-pill:hover {
+  background: var(--primary);
+  transform: translateY(-4px);
+}
+
+/* ------------------------------------
+   FOOTER
+------------------------------------ */
+footer {
+  text-align: center;
+  padding: 22px 0;
+  background: white;
+  color: #777;
+  border-top: 1px solid #eee;
+}
+
+
+/* QUANTITY BOX */
+.qty-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 10px;
+}
+
+.qty-box label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+}
+
+.qty-box input {
+  width: 55px;
+  height: 38px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+  transition: 0.2s;
+}
+
+/* Hover & Focus animation */
+.qty-box input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 6px rgba(230, 39, 39, 0.4);
+}
+
+.qty-box input::-webkit-inner-spin-button,
+.qty-box input::-webkit-outer-spin-button {
+  opacity: 1;  /* Keep visible so user can tap */
+}
+
+/* ---------------------------
+      TOAST MESSAGE
+---------------------------- */
+.toast {
+  position: fixed;
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: white;
+  padding: 14px 28px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 999999;
+}
+
+.toast.show {
+  bottom: 30px;
+  opacity: 1;
+}
+
+</style>
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+<div class="site-nav">
+  <div class="inner">
+    <div class="hamburger" onclick="toggleMobileMenu()">☰</div>
+
+    <div class="nav-contact">
+      <div class="desktop-dropdown">
+        <div class="desktop-dropdown-header" onclick="toggleDesktopMenu()">
+          Shop By <span class="desk-arrow">⌄</span>
+        </div>
+        <div id="desktopMenu" class="desktop-menu">
+          <div class="desk-group">
+            <div class="desk-group-header" onclick="toggleDeskGroup('desk-type')">
+              Type <span class="desk-arrow-small">⌄</span>
+            </div>
+            <div class="desk-group-body" id="desk-type">
+              <a href="#">Banaras</a>
+              <a href="#">Kanjivaram</a>
+              <a href="#">Printed</a>
+              <a href="#">Handloom</a>
+              <a href="#">Exclusive</a>
+              <a href="#">All Sarees</a>
+            </div>
+          </div>
+          <div class="desk-group">
+            <div class="desk-group-header" onclick="toggleDeskGroup('desk-occ')">
+              Occasion <span class="desk-arrow-small">⌄</span>
+            </div>
+            <div class="desk-group-body" id="desk-occ">
+              <a href="#">Wedding Wear</a>
+              <a href="#">Party Wear</a>
+              <a href="#">Festive Wear</a>
+              <a href="#">Reception Wear</a>
+              <a href="#">Casual Wear</a>
+            </div>
+          </div>
+          <div class="desk-group">
+            <div class="desk-group-header" onclick="toggleDeskGroup('desk-range')">
+              Range <span class="desk-arrow-small">⌄</span>
+            </div>
+            <div class="desk-group-body" id="desk-range">
+              <a href="#">Under 10k</a>
+              <a href="#">Under 20k</a>
+              <a href="#">Under 30k</a>
+              <a href="#">Under 40k</a>
+              <a href="#">Above 40k</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="#">Contact Us</a>
+    </div>
+
+    <img class="logo-img" src="text-logo.png" onclick="window.location.href='index.html'" alt="Rudhvi Vastraa Logo" />
+
+    <div class="nav-icons">
+
+      <a href="favorites.html" class="icon-btn">
+        <svg width="24" height="24" fill="none">
+          <path d="M12 20s-7-4.5-7-10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.5-7 10-7 10z"
+                stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </a>
+
+              <a href="cart.html" class="icon-btn cart-btn" aria-label="Cart">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 7h12l1 14H5L6 7z" stroke="white" stroke-width="1.8" stroke-linejoin="round" />
+            <path d="M9 7a3 3 0 0 1 6 0" stroke="white" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+          <span class="cart-badge" id="cartCount">0</span>
+        </a>
+
+    <a href="index.html" class="icon-btn cart-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M3 10.5L12 3L21 10.5V20C21 20.6 20.6 21 20 21H4C3.4 21 3 20.6 3 20V10.5Z"
+                stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M9 21V14H15V21"
+                stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+  <!-- PRODUCT SECTION -->
+  <div id="productDisplay" class="product-section">
+      <p>Loading product...</p>
+  </div>
+
+  <!-- CONTACT SECTION -->
+<section id="contact" class="contact fade-left">
+    <div style="max-width:1000px;margin:auto;">
+      <h2>Get in Touch</h2>
+      <p>For product enquiries, collaborations, or assistance, reach out to us below.</p>
+      
+      <div class="contact-links">
+        
+        <a href="https://wa.me/918106662341" target="_blank" class="contact-pill">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          +91 8106662341
+        </a>
+
+        <a href="https://instagram.com/rudhvi_vastraa" target="_blank" class="contact-pill">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+          @rudhvi_vastraa
+        </a>
+        
+        <a href="https://youtube.com/@rudhvivastraa?si=qEKagU95Scu20b3B" target="_blank" class="contact-pill">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+          Rudhvi Vastraa
+        </a>
+      </div>
+    </div>
+  </section>
+<div id="toast" class="toast">Saree added to cart</div>
+
+  <footer>© <span id="year"></span> Rudhvi Vastraa — All rights reserved</footer>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+const sarees = [
+  {id:"16190137", name:"Soft Pink Gadwal Silk", desc:"Pastel pink with zari buttas and contrast Kanchi border.", price:22500, image:"pink-gadwal.jpg", soldOut:true},
+  {id:"RS0001", name:"Kanchipuram Silk", desc:"Elegant traditional silk saree", price:1, image:"casual.jpg"},
+  {id:"RS0002", name:"Banarasi Saree", desc:"Classic zari woven masterpiece", price:2, image:"designer.jpg"},
+  {id:"RS0003", name:"Chiffon Saree", desc:"Lightweight and breezy", price:1800, image:"traditional.jpg"},
+  {id:"RS0004", name:"Georgette Saree", desc:"Perfect for festive wear", price:2500, image:"designer.jpg"}
+];
+
+const params = new URLSearchParams(window.location.search);
+const currentId = params.get("id");
+const product = sarees.find(p => p.id === currentId);
+const container = document.getElementById("productDisplay");
+
+if(!product){
+  container.innerHTML = "<h2>Product not found.</h2>";
+} else {
+  const sold = product.soldOut;
+
+  container.innerHTML = `
+    <div class="product-image">
+      <img src="${product.image}">
+    </div>
+    <div class="product-info">
+      <h1 class="p-title">${product.name}</h1>
+      <div class="p-sku">${product.id}</div>
+
+      <div class="p-price">
+        ₹${product.price.toLocaleString("en-IN")}
+        ${sold ? `<span style="background:#000;color:white;padding:4px 8px;border-radius:6px;font-size:13px;margin-left:10px;">Sold Out</span>` : ""}
+      </div>
+
+      <p class="p-desc">${product.desc}</p>
+
+      ${sold ? "" : `
+      <div class="qty-box">
+        <label>Quantity:</label>
+        <input id="qtyIn" type="number" value="1" min="1">
+      </div>
+      `}
+
+      <button class="btn-buy" ${sold ? "disabled" : ""} onclick="addToCart('${product.id}')">
+        ${sold ? "Sold Out" : "Add to Cart"}
+      </button>
+    </div>
+  `;
+}
+
+function addToCart(id){
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const item = sarees.find(x => x.id === id);
+  const existing = cart.find(x => x.id === id);
+
+  const qty = parseInt(document.getElementById("qtyIn").value);
+
+  if(existing) existing.qty += qty;
+  else cart.push({...item, qty});
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  updateCartCount();   // 🔥 UPDATE CART ICON
+  showToast(item.name + " added to cart!");
+}
+
+
+function showToast(msg) {
+  const toast = document.getElementById("toast");
+  toast.textContent = msg;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2200);
+}
+
+function updateCartCount() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const count = cart.reduce((sum, item) => sum + item.qty, 0);
+  document.getElementById("cartCount").textContent = count;
+}
+function toggleMobileMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    function toggleDrop(id) {
+      const body = document.getElementById(id);
+      const arrow = body.previousElementSibling.querySelector('.arrow');
+      if (body.style.display === "block") {
+        body.style.display = "none";
+        arrow.style.transform = "rotate(0deg)";
+      } else {
+        body.style.display = "block";
+        arrow.style.transform = "rotate(180deg)";
+      }
+    }
+
+    function toggleDesktopMenu() {
+      const menu = document.getElementById("desktopMenu");
+      const arrow = document.querySelector(".desk-arrow");
+      if (menu.style.display === "block") {
+        menu.style.display = "none";
+        arrow.style.transform = "rotate(0deg)";
+      } else {
+        menu.style.display = "block";
+        arrow.style.transform = "rotate(180deg)";
+      }
+    }
+
+    document.addEventListener("click", function (e) {
+      const menu = document.getElementById("desktopMenu");
+      const header = document.querySelector(".desktop-dropdown-header");
+      if (menu && header && !header.contains(e.target) && !menu.contains(e.target)) {
+        menu.style.display = "none";
+        const arr = document.querySelector(".desk-arrow");
+        if (arr) arr.style.transform = "rotate(0deg)";
+      }
+    });
+
+    function toggleDeskGroup(id) {
+      const body = document.getElementById(id);
+      const arrow = body.previousElementSibling.querySelector('.desk-arrow-small');
+      if (body.style.display === "block") {
+        body.style.display = "none";
+        arrow.style.transform = "rotate(0deg)";
+      } else {
+        body.style.display = "block";
+        arrow.style.transform = "rotate(180deg)";
+      }
+    }
+</script>
+
+</body>
+</html>
