@@ -370,10 +370,31 @@
     }
 
 function payViaUPI() {
-
+  
       const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-      const formattedTotal = total.toFixed(2); 
-      const link = `upi://pay?pa=adityathirumala20@oksbi&pn=Rudhvi%20Vastraa&am=${formattedTotal}&cu=INR&tn=Rudhvi%20Order`;
+      
+      if (!total || total <= 0) {
+        alert("Cart is empty or invalid!");
+        return;
+      }
+
+      const formattedTotal = total.toFixed(2);
+
+      const uniqueRef = "TXN" + Date.now(); 
+
+      const upiID = "adityathirumala20@oksbi";
+      const upiName = "Rudhvi Vastraa";
+      const note = "Payment for Order";
+      const link = 
+        "upi://pay?" +
+        "pa=" + encodeURIComponent(upiID) +       // Payee Address
+        "&pn=" + encodeURIComponent(upiName) +    // Payee Name
+        "&am=" + formattedTotal +                 // Amount
+        "&cu=INR" +                               // Currency
+        "&tr=" + uniqueRef +                      // UNIQUE Transaction Ref
+        "&tn=" + encodeURIComponent(note);        // Transaction Note
+
+      // 5. Redirect
       window.location.href = link;
     }
 
