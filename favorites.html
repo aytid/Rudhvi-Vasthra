@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Your Cart — Rudhvi Vasthra</title>
+  <title>Your Favorites — Rudhvi Vasthra</title>
+  <link rel="icon" type="image/png" sizes="256x256" href="img-logo-removebg.png">
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -93,7 +94,7 @@
       transform: scale(1.1);
     }
 
-    /* Inline Search */
+    /* --- INLINE SEARCH STYLING --- */
     .inline-search-input {
       width: 0;
       opacity: 0;
@@ -138,7 +139,7 @@
       border: 2px solid var(--beige);
     }
 
-    /* Dropdowns */
+    /* DROPDOWNS */
     .desktop-dropdown { position: relative; }
     .desktop-dropdown-header {
       color: white;
@@ -179,9 +180,8 @@
       font-size: 14px;
       text-decoration: none;
     }
-    .desk-group-body a:hover { text-decoration: underline; }
 
-    /* Mobile Menu */
+    /* MOBILE MENU */
     .mobile-menu {
       display: none;
       background: var(--beige);
@@ -203,13 +203,12 @@
       justify-content: space-between;
       cursor: pointer;
     }
-    .mobile-dropdown-header .arrow { transition: 0.3s; }
     .mobile-dropdown-body { display: none; padding-left: 12px; }
     .mobile-dropdown-body a {
-      display: block;
       color: white;
       padding: 8px 0;
       font-size: 14px;
+      display: block;
       text-decoration: none;
     }
     .mobile-contact {
@@ -229,33 +228,34 @@
       .inline-search-input.active { width: 120px; }
     }
 
-    /* --- CART PAGE CONTENT --- */
+    /* --- FAVORITES PAGE CONTENT --- */
     main {
       max-width: 1100px;
       margin: 40px auto 60px;
       padding: 0 20px;
     }
-
+    
     h1 {
       font-family: "Playfair Display", serif;
       text-align: center;
       margin-bottom: 30px;
     }
 
-    /* GRID LAYOUT (Same as Index/Favorites) */
-    #cartList {
+    #favList {
       display: grid;
+      /* Matches index grid logic */
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 20px;
     }
 
+    /* Desktop 4 columns like index */
     @media (min-width: 1024px) {
-      #cartList {
+      #favList {
         grid-template-columns: repeat(4, 1fr);
       }
     }
 
-    /* CARD STYLE */
+    /* --- TILE CARD STYLE (Matched to Index) --- */
     .tile {
       background: #fff;
       border-radius: 8px;
@@ -267,7 +267,7 @@
     }
     
     .tile:hover {
-      transform: translateY(-5px);
+        transform: translateY(-5px);
     }
 
     .tile img { width: 100%; height: 250px; object-fit: cover; }
@@ -276,117 +276,43 @@
     .tile p { margin: 5px 0; color: #555; font-size: 14px;} 
     .tile p strong { color: #000; font-size: 16px; }
 
-    /* CARD ACTIONS (Quantity Controls) */
+    /* Action Buttons Container */
     .tile-actions {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 15px;
-      margin-top: 12px;
+      gap: 12px;
+      margin-top: 8px;
       padding-bottom: 5px;
     }
 
-    .qty-btn {
-      width: 32px;
-      height: 32px;
+    /* Add to Cart Button */
+    .tile button {
       background: var(--beige);
+      color: #000;
       border: none;
-      font-size: 18px;
-      font-weight: 600;
+      padding: 8px 12px;
       border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: .2s;
+    }
+
+    .tile button:hover {
+      background: #b8a78f;
+      transform: translateY(-2px);
+    }
+
+    /* Heart Icon */
+    .fav-icon {
+      font-size: 24px;
       cursor: pointer;
       transition: 0.2s;
       display: flex;
       align-items: center;
-      justify-content: center;
     }
+    .fav-icon:hover { transform: scale(1.2); }
 
-    .qty-btn:hover {
-      background: #b8a78f;
-      transform: scale(1.1);
-    }
-
-    .qty-val {
-      font-weight: 600;
-      font-size: 16px;
-      min-width: 20px;
-    }
-
-    /* TOTAL & CHECKOUT AREA */
-    .cart-footer-area {
-      margin-top: 40px;
-      padding: 20px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      text-align: center;
-    }
-
-    #totalPrice h3 {
-        font-family: "Playfair Display", serif;
-        font-size: 28px;
-        margin: 0 0 20px 0;
-        color: var(--text);
-    }
-
-    .payBtn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 14px 40px;
-      border-radius: 8px;
-      font-size: 18px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 4px 10px rgba(230,39,39,0.3);
-    }
-
-    .payBtn:hover {
-      background: #c41d1d;
-      transform: translateY(-2px);
-    }
-
-    /* --- PAYMENT POPUP --- */
-    #paymentPopup {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    #popupBox {
-      background: #fff;
-      padding: 28px;
-      border-radius: 10px;
-      width: 300px;
-      text-align: center;
-      animation: popIn 0.3s ease;
-    }
-
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .popupBtn {
-      width: 100%;
-      padding: 12px;
-      background: var(--beige);
-      margin-top: 12px;
-      border-radius: 6px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .closeBtn {
-      background: var(--primary);
-      color: white;
-    }
 
     /* --- CONTACT SECTION STYLES --- */
     .contact {
@@ -414,6 +340,7 @@
       line-height: 1.6;
     }
 
+    /* Flex Container for Buttons */
     .contact-links {
       display: flex;
       justify-content: center;
@@ -422,6 +349,7 @@
       flex-wrap: wrap;
     }
 
+    /* Button Pills */
     .contact-pill {
       display: inline-flex;
       align-items: center;
@@ -444,6 +372,7 @@
       transition: transform 0.3s ease;
     }
 
+    /* Hover Effects */
     .contact-pill:hover {
       background: var(--primary);
       border-color: var(--primary);
@@ -451,7 +380,9 @@
       box-shadow: 0 10px 25px rgba(230, 39, 39, 0.4);
     }
 
-    .contact-pill:hover svg { transform: scale(1.1); }
+    .contact-pill:hover svg {
+      transform: scale(1.1);
+    }
 
     @media (max-width: 768px) {
       .contact { padding: 60px 20px; }
@@ -467,8 +398,26 @@
       color: #777;
       border-top: 1px solid #eee;
     }
-  </style>
 
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: white;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      z-index: 99999;
+    }
+    .toast.show { opacity: 1; }
+
+  </style>
 </head>
 
 <body>
@@ -496,6 +445,7 @@
               <a href="#">All Sarees</a>
             </div>
           </div>
+
           <div class="desk-group">
             <div class="desk-group-header" onclick="toggleDeskGroup('desk-occ')">
               Occasion <span class="desk-arrow-small">⌄</span>
@@ -508,6 +458,7 @@
               <a href="#">Casual Wear</a>
             </div>
           </div>
+
           <div class="desk-group">
             <div class="desk-group-header" onclick="toggleDeskGroup('desk-range')">
               Range <span class="desk-arrow-small">⌄</span>
@@ -520,8 +471,10 @@
               <a href="#">Above 40k</a>
             </div>
           </div>
+
         </div>
       </div>
+
       <a href="#">Contact Us</a>
     </div>
 
@@ -529,19 +482,24 @@
 
     <div class="nav-icons">
       <input type="text" id="inlineSearch" class="inline-search-input" placeholder="Type to search...">
+
       <a href="javascript:void(0)" class="icon-btn" onclick="handleSearchClick()">
         <svg width="24" height="24" fill="none">
           <circle cx="11" cy="11" r="7.5" stroke="white" stroke-width="1.8"></circle>
           <line x1="16" y1="16" x2="21" y2="21" stroke="white" stroke-width="1.8"></line>
         </svg>
       </a>
-      <a href="favorites.html" class="icon-btn">
-        <svg width="24" height="24" fill="none">
-          <path d="M12 20s-7-4.5-7-10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.5-7 10-7 10z"
-                stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
-      </a>
 
+      <a href="cart.html" class="icon-btn cart-btn" aria-label="Cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 7h12l1 14H5L6 7z"
+            stroke="white" stroke-width="1.8" stroke-linejoin="round" />
+          <path d="M9 7a3 3 0 0 1 6 0"
+            stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <span class="cart-badge" id="cartCount">0</span>
+      </a>
 
     <a href="index.html" class="icon-btn cart-btn">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -568,6 +526,7 @@
         <a href="#">All Sarees</a>
       </div>
     </div>
+
     <div class="mobile-dropdown">
       <div class="mobile-dropdown-header" onclick="toggleDrop('drop-occ')">
         Occasion <span class="arrow">⌄</span>
@@ -580,6 +539,7 @@
         <a href="#">Casual Wear</a>
       </div>
     </div>
+
     <div class="mobile-dropdown">
       <div class="mobile-dropdown-header" onclick="toggleDrop('drop-range')">
         Range <span class="arrow">⌄</span>
@@ -592,66 +552,55 @@
         <a href="#">Above 40k</a>
       </div>
     </div>
+
     <a href="#" class="mobile-contact">Contact Us</a>
   </div>
 </div>
 
 <main>
-  <h1>Your Cart</h1>
-  
-  <div id="cartList"></div>
-
-  <div class="cart-footer-area" id="cartFooter">
-      <div id="totalPrice"></div>
-      <button id="proceedBtn" class="payBtn">Proceed to Payment</button>
-  </div>
+  <h1>Your Favorites</h1>
+  <div id="favList"></div>
 </main>
 
-<section class="contact">
+<section id="contact" class="contact fade-up">
     <div style="max-width:1000px;margin:auto;">
       <h2>Get in Touch</h2>
       <p>For product enquiries, collaborations, or assistance, reach out to us below.</p>
       
       <div class="contact-links">
+        
         <a href="https://wa.me/918106662341" target="_blank" class="contact-pill">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
           </svg>
           +91 8106662341
         </a>
+
         <a href="https://instagram.com/rudhvi_vastraa" target="_blank" class="contact-pill">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
           </svg>
           @rudhvi_vastraa
         </a>
+        
         <a href="https://youtube.com/@rudhvivastraa?si=qEKagU95Scu20b3B" target="_blank" class="contact-pill">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
           </svg>
           Rudhvi Vasthra
         </a>
+
       </div>
     </div>
-</section>
+  </section>
 
 <footer>
   © <span id="year"></span> Rudhvi Vasthra — All rights reserved
 </footer>
 
-<div id="paymentPopup">
-  <div id="popupBox">
-    <h2>Choose Payment Method</h2>
-    <button class="popupBtn" onclick="payViaUPI()">Pay via UPI</button>
-    <button class="popupBtn" onclick="payViaWhatsApp()">Order via WhatsApp</button>
-    <button class="popupBtn closeBtn" onclick="closePopup()">Cancel</button>
-  </div>
-</div>
-
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 
-/* --- NAVBAR JS --- */
 function toggleMobileMenu(){
   const menu = document.getElementById("mobileMenu");
   menu.style.display = menu.style.display === "block" ? "none" : "block";
@@ -687,7 +636,7 @@ document.addEventListener("click", (e)=>{
   const menu = document.getElementById("desktopMenu");
   const header = document.querySelector(".desktop-dropdown-header");
 
-  if(!header.contains(e.target) && !menu.contains(e.target)){
+  if(menu && header && !header.contains(e.target) && !menu.contains(e.target)){
     menu.style.display = "none";
     document.querySelector(".desk-arrow").style.transform = "rotate(0deg)";
   }
@@ -704,6 +653,82 @@ function toggleDeskGroup(id){
     body.style.display = "block";
     arrow.style.transform = "rotate(180deg)";
   }
+}
+
+/* --- FAVORITES JS --- */
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function updateCartCount(){
+    const total = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
+    document.getElementById("cartCount").textContent = total;
+}
+
+function renderFavorites(){
+  const list = document.getElementById("favList");
+
+  if(favorites.length === 0){
+    list.innerHTML = `
+      <p style="grid-column:1/-1; text-align:center; font-size:18px; padding:40px;">
+        No favorites added yet ❤️
+      </p>`;
+    updateCartCount();
+    return;
+  }
+
+  // Updated to match the .tile card structure
+  list.innerHTML = favorites.map((s)=>`
+    <div class="tile">
+      <img src="${s.image}" alt="${s.name}">
+      <h3>${s.name}</h3>
+      <div class="saree-id">ID: ${s.id}</div>
+      <p>${s.desc || ''}</p>
+      <p><strong>₹${s.price}</strong></p>
+
+      <div class="tile-actions">
+        <button onclick="addToCart('${s.id}')">Add to Cart</button>
+        
+        <span class="fav-icon" onclick="removeFavorite('${s.id}')" title="Remove from Favorites">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="none">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+            2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+            14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+            6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </span>
+      </div>
+    </div>
+  `).join("");
+  updateCartCount();
+}
+
+function removeFavorite(id){
+  favorites = favorites.filter(f => f.id !== id);
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  renderFavorites();
+}
+
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(()=> t.classList.remove("show"), 1800);
+}
+
+function addToCart(id){
+  const item = favorites.find(x => x.id === id);
+  if(!item) return;
+
+  let existing = cart.find(c => c.id === id);
+  if(existing){
+    existing.qty++;
+  } else {
+    cart.push({ ...item, qty: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  showToast("Added to cart");
+  updateCartCount();
 }
 
 /* --- SEARCH JS --- */
@@ -728,82 +753,10 @@ document.getElementById("inlineSearch").addEventListener("keypress", function(e)
   }
 });
 
-/* --- CART JS --- */
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-function renderCart(){
-  const list = document.getElementById("cartList");
-  const totalEl = document.getElementById("totalPrice");
-  const footerEl = document.getElementById("cartFooter");
-
-  if(cart.length === 0){
-    list.innerHTML = `<p style="grid-column:1/-1; text-align:center; font-size:18px; padding:40px;">Your cart is empty.</p>`;
-    footerEl.style.display = "none";
-    document.getElementById("cartCount").textContent = 0;
-    return;
-  }
-
-  footerEl.style.display = "block";
-
-  list.innerHTML = cart.map((item,i)=> `
-    <div class="tile">
-      <img src="${item.image}" alt="${item.name}">
-      <h3>${item.name}</h3>
-      <div class="saree-id">ID: ${item.id}</div>
-      <p><strong>₹${item.price}</strong></p>
-
-      <div class="tile-actions">
-        <button class="qty-btn" onclick="changeQty(${i}, -1)">−</button>
-        <span class="qty-val">${item.qty}</span>
-        <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
-      </div>
-    </div>
-  `).join("");
-
-  const total = cart.reduce((sum, x)=> sum + x.price * x.qty, 0);
-  totalEl.innerHTML = `<h3>Total: ₹${total.toLocaleString()}</h3>`;
-
-  document.getElementById("cartCount").textContent =
-    cart.reduce((sum,x)=> sum + x.qty, 0);
-}
-
-function changeQty(i, delta){
-  cart[i].qty += delta;
-  if(cart[i].qty <= 0) cart.splice(i,1);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  renderCart();
-}
-
-document.getElementById("proceedBtn").onclick = () => {
-  document.getElementById("paymentPopup").style.display = "flex";
-};
-
-function closePopup(){
-  document.getElementById("paymentPopup").style.display = "none";
-}
-
-function payViaUPI(){
-  const total = cart.reduce((s,i)=> s + i.price*i.qty, 0);
-  const link = `upi://pay?pa=adityathirumala20@oksbi&pn=Rudhvi%20Vasthra&am=${total}&cu=INR`;
-  window.location.href = link;
-}
-
-function payViaWhatsApp(){
-  const name = localStorage.getItem("userName") || "Customer";
-  let msg = `Hello Rudhvi Vasthra,%0AI'm ${name}%0AOrder:%0A`;
-
-  cart.forEach(i=>{
-    msg += `${i.name} (ID:${i.id}) x${i.qty} — ₹${i.qty*i.price}%0A`;
-  });
-
-  const total = cart.reduce((s,i)=> s+i.qty*i.price,0);
-  msg += `%0ATotal: ₹${total}`;
-
-  window.open(`https://wa.me/919701343474?text=${msg}`, "_blank");
-}
-
-renderCart();
+// Init
+renderFavorites();
 </script>
+<div id="toast" class="toast"></div>
 
 </body>
 </html>

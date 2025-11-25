@@ -4,13 +4,50 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Rudhvi Vasthra — Sarees Collection</title>
+  <title>Search Results — Rudhvi Vasthra</title>
   <link rel="icon" type="image/png" sizes="256x256" href="img-logo-removebg.png">
 
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
     rel="stylesheet">
+
   <link rel="stylesheet" href="styles.css" />
+  
+  <style>
+    /* Style for the 'Page Center' Search Bar */
+    .center-search-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .center-search-input {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      width: 100%;
+      max-width: 300px;
+      font-size: 16px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .center-search-btn {
+      padding: 12px 24px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .center-search-btn:hover {
+      background-color: #c41d1d;
+    }
+  </style>
 </head>
 
 <body>
@@ -21,13 +58,11 @@
       <div class="hamburger" onclick="toggleMobileMenu()">☰</div>
 
       <div class="nav-contact">
-
         <div class="desktop-dropdown">
           <div class="desktop-dropdown-header" onclick="toggleDesktopMenu()">
             Shop By <span class="desk-arrow">⌄</span>
           </div>
           <div id="desktopMenu" class="desktop-menu">
-
             <div class="desk-group">
               <div class="desk-group-header" onclick="toggleDeskGroup('desk-type')">
                 Type <span class="desk-arrow-small">⌄</span>
@@ -41,7 +76,6 @@
                 <a href="#">All Sarees</a>
               </div>
             </div>
-
             <div class="desk-group">
               <div class="desk-group-header" onclick="toggleDeskGroup('desk-occasion')">
                 Occasion <span class="desk-arrow-small">⌄</span>
@@ -54,7 +88,6 @@
                 <a href="#">Casual Wear</a>
               </div>
             </div>
-
             <div class="desk-group">
               <div class="desk-group-header" onclick="toggleDeskGroup('desk-range')">
                 Range <span class="desk-arrow-small">⌄</span>
@@ -67,10 +100,8 @@
                 <a href="#">Above 40k</a>
               </div>
             </div>
-
           </div>
         </div>
-
         <a href="#">Contact Us</a>
       </div>
 
@@ -82,13 +113,12 @@
       <div class="nav-icons">
 
         <input type="text" id="inlineSearch" class="inline-search-input" placeholder="Type to search...">
-
-        <a href="javascript:void(0)" class="icon-btn" onclick="handleSearchClick()">
+        <!-- <a href="javascript:void(0)" class="icon-btn" onclick="handleSearchClick()">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="11" cy="11" r="7.5" stroke="white" stroke-width="1.8" />
             <line x1="16" y1="16" x2="21" y2="21" stroke="white" stroke-width="1.8" stroke-linecap="round" />
           </svg>
-        </a>
+        </a> -->
 
         <a href="favorites.html" class="icon-btn" aria-label="Favorites">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -105,7 +135,14 @@
           </svg>
           <span class="cart-badge" id="cartCount">0</span>
         </a>
-
+              <a href="index.html" class="icon-btn cart-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M3 10.5L12 3L21 10.5V20C21 20.6 20.6 21 20 21H4C3.4 21 3 20.6 3 20V10.5Z"
+                stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M9 21V14H15V21"
+                stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
       </div>
     </div>
 
@@ -123,7 +160,6 @@
           <a href="#">All Sarees</a>
         </div>
       </div>
-
       <div class="mobile-dropdown">
         <div class="mobile-dropdown-header" onclick="toggleDrop('drop-occasion')">
           Occasion <span class="arrow">⌃</span>
@@ -136,7 +172,6 @@
           <a href="#">Casual Wear</a>
         </div>
       </div>
-
       <div class="mobile-dropdown">
         <div class="mobile-dropdown-header" onclick="toggleDrop('drop-range')">
           Range <span class="arrow">⌃</span>
@@ -149,74 +184,43 @@
           <a href="#">Above 40k</a>
         </div>
       </div>
-
       <a href="#" class="mobile-contact">Contact Us</a>
     </div>
   </div>
 
-  <header class="hero">
-    <p id="greeting" class="greeting-text fade-up"></p>
-    <h1 class="fade-up">Rudhvi Vasthra</h1>
-    <p class="fade-up">A curated collection celebrating the rich heritage and artistry of Indian sarees.</p>
+  <header class="page-header fade-up">
+    <h1>Search Results</h1>
+    <p id="searchQueryDisplay">Searching...</p>
   </header>
 
+  <section class="fade-up">
+    <div style="max-width:1100px;margin:auto;">
 
-  <section id="collection">
-    <div style="max-width:1100px;margin:auto;text-align:center;">
-      <h2 class="fade-left">Our Collection</h2>
-      <div class="tiles fade-left" id="sareeGrid"></div>
-    </div>
-  </section>
+      <div class="tiles" id="resultsGrid"></div>
 
+      <div id="noResultsMsg" class="no-results-box" style="display:none;">
+        <h3 id="noResultTitle">No Matches Found</h3>
+        <p id="noResultText">We couldn't find any sarees matching your search.</p>
+        
+        <a href="index.html" id="browseAllBtn" class="btn-home">Browse All Sarees</a>
 
-<section class="about-section" id="about">
-    <div style="max-width:1000px;margin:auto;text-align: center;">
-      <h2 class="fade-left">About Rudhvi Vasthra</h2>
-      
-      <p class="about-text fade-left">
-        Welcome to <strong>Rudhvi Vasthra</strong>, a sanctuary for those who cherish the timeless elegance of the six-yard drape. Our journey began with a passion to revive and celebrate the rich textile heritage of India, bridging the gap between traditional master weavers and the modern woman.
-      </p>
-
-      <p class="about-text fade-left">
-        We take pride in curating a diverse and exquisite collection that speaks the language of grace. From the regal grandeur of authentic <strong>Kanjivaram Silks</strong> and the majestic opulence of <strong>Banarasi Zari</strong> to the subtle sophistication of <strong>Handloom Cottons, breezy Chiffons, and festive Georgettes</strong> — every piece in our store is handpicked for its quality, weave, and artistry.
-      </p>
-
-      <p class="about-text fade-left">
-        At Rudhvi Vasthra, we believe a saree is more than just attire; it is an heirloom, a memory, and a piece of art passed down through generations. Whether you are looking for a bridal masterpiece, a statement piece for a party, or comfortable elegance for daily wear, we are dedicated to helping you find the perfect match.
-      </p>
-
-      <p class="about-text fade-left">
-        Our promise is simple: <strong>Uncompromised Quality and Timeless Beauty.</strong> Thank you for letting us be a part of your special moments and celebrations.
-      </p>
-
-    </div>
-  </section>
-  <section id="testimonials" style="background:var(--bg-cream);" class="fade-left">
-    <div style="max-width:1000px;margin:auto;text-align:center;">
-      <h2>Customer Reviews</h2>
-      <p>We value every voice and appreciate your continued support.</p>
-    </div>
-
-    <div class="feedback-card">
-      <h3>Leave Your Feedback</h3>
-      <div style="margin-top:10px;"><textarea id="fbMessage" rows="4" placeholder="Share your feedback..."></textarea>
+        <div id="centerSearchBox" class="center-search-container" style="display:none;">
+            <input type="text" id="mainPageInput" class="center-search-input" placeholder="e.g. Silk, Banaras...">
+            <button onclick="triggerMainSearch()" class="center-search-btn">Search</button>
+        </div>
       </div>
-      <div class="feedback-actions">
-        <button class="btn-secondary" onclick="clearFeedbackForm()">Clear</button>
-        <button class="btn-primary" onclick="submitFeedback()">Submit</button>
-      </div>
-      <div class="feedback-list" id="feedbackList"></div>
+
     </div>
   </section>
 
-<section id="contact" class="contact fade-left">
+  <section id="contact" class="contact fade-up">
     <div style="max-width:1000px;margin:auto;">
       <h2>Get in Touch</h2>
       <p>For product enquiries, collaborations, or assistance, reach out to us below.</p>
       
       <div class="contact-links">
         
-        <a href="https://wa.me/919701343474" target="_blank" class="contact-pill">
+        <a href="https://wa.me/918106662341" target="_blank" class="contact-pill">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
           </svg>
@@ -240,33 +244,11 @@
     </div>
   </section>
 
+
   <footer>© <span id="year"></span> Rudhvi Vasthra — All rights reserved</footer>
 
-  <div id="whatsappBtn" title="Chat on WhatsApp"><img src="whatsapp.png" alt="WhatsApp"></div>
-
-  <div id="welcomePopup">
-    <div id="popupBox">
-      <h2>Welcome!</h2>
-      <p>What should we call you?</p>
-      <input type="text" id="userNameInput" placeholder="Enter your name">
-      <button onclick="saveUser()">Proceed</button>
-    </div>
-  </div>
-
   <script>
-    const greeting = document.getElementById('greeting');
-    const popup = document.getElementById('welcomePopup');
-    const sareeGrid = document.getElementById('sareeGrid');
-    const cartCount = document.getElementById('cartCount');
-    const fbMessageInput = document.getElementById('fbMessage');
-    const feedbackListEl = document.getElementById('feedbackList');
-
-    let userName = localStorage.getItem('userName') || "";
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    let feedbacks = JSON.parse(localStorage.getItem('feedbacks') || '[]');
-    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-
-    // --- DATA ---
+    /* --- DATA (Must match Index) --- */
     const sarees = [
       { id: "RS0001", name: "Kanchipuram Silk", desc: "Elegant traditional silk saree", price: 1, image: "casual.jpg" },
       { id: "RS0002", name: "Banarasi Saree", desc: "Classic zari woven masterpiece", price: 2, image: "designer.jpg" },
@@ -274,100 +256,199 @@
       { id: "RS0004", name: "Georgette Saree", desc: "Perfect for festive wear", price: 2500, image: "designer.jpg" }
     ];
 
-    function showToast(msg) {
-      const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t);
-      setTimeout(() => t.remove(), 2500);
-    }
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-    function renderSarees() {
-      sareeGrid.innerHTML = sarees.map((s, i) => {
-        const isFav = favorites.some(f => f.id === s.id);
-        return `
-      <div class="tile">
-        <img src="${s.image}" alt="${s.name}">
-        <h3>${s.name}</h3>
-        <div class="saree-id">ID: ${s.id}</div>
-        <p>${s.desc}</p>
-        <p><strong>₹${s.price}</strong></p>
-        <div class="tile-actions">
-          <button onclick="addToCart(${i})">Add to Cart</button>
-          <span class="fav-icon" onclick="toggleFavorite('${s.id}')">
-            ${isFav
-            ? `<svg width="22" height="22" viewBox="0 0 24 24" fill="red" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`
-            : `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21.5l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>`
-          }
-          </span>
-        </div>
-      </div>
-    `;
-      }).join('');
+    /* --- UTILITIES --- */
+    function showToast(msg) {
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.textContent = msg;
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 2500);
     }
 
     function updateCartCount() {
       const total = cart.reduce((sum, it) => sum + (it.qty || 0), 0);
-      cartCount.textContent = total;
+      document.getElementById('cartCount').textContent = total;
     }
 
-    function toggleFavorite(id) {
-      const saree = sarees.find(s => s.id === id);
-      const index = favorites.findIndex(f => f.id === id);
-      if (index === -1) {
-        favorites.push(saree);
-        showToast(`${saree.name} added to favorites`);
-      } else {
-        favorites.splice(index, 1);
-        showToast(`${saree.name} removed from favorites`);
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    /* --- MAIN SEARCH LOGIC --- */
+    function performSearch() {
+      const query = getQueryParam('q');
+      const displayEl = document.getElementById('searchQueryDisplay');
+      const gridEl = document.getElementById('resultsGrid');
+      const noResultsEl = document.getElementById('noResultsMsg');
+      
+      const noResultTitle = document.getElementById('noResultTitle');
+      const noResultText = document.getElementById('noResultText');
+      const browseAllBtn = document.getElementById('browseAllBtn');
+      const centerSearchBox = document.getElementById('centerSearchBox');
+
+      // CASE 1: No Query (User just came to search.html)
+      if (!query) {
+        displayEl.textContent = "Please enter a search term";
+        noResultsEl.style.display = 'block';
+        
+        // Show Search Bar, Hide "Browse All"
+        noResultTitle.textContent = "Start your search";
+        noResultText.textContent = "";
+        centerSearchBox.style.display = 'flex';
+        browseAllBtn.style.display = 'none';
+        
+        // Focus the input
+        document.getElementById("mainPageInput").focus();
+        return;
       }
-      localStorage.setItem("favorites", JSON.stringify(favorites));
-      renderSarees();
+
+      // CASE 2: Query Exists
+      displayEl.innerHTML = `Showing results for <strong>"${escapeHtml(query)}"</strong>`;
+      const lowerQ = query.toLowerCase();
+
+      // Filter
+      const results = sarees.filter(s =>
+        s.name.toLowerCase().includes(lowerQ) ||
+        s.desc.toLowerCase().includes(lowerQ) ||
+        s.id.toLowerCase().includes(lowerQ)
+      );
+
+      // CASE 2a: No matches found
+      if (results.length === 0) {
+        noResultsEl.style.display = 'block';
+        gridEl.innerHTML = '';
+        
+        // Show "No matches" text and "Browse All" button
+        noResultTitle.textContent = "No Matches Found";
+        noResultText.textContent = "We couldn't find any sarees matching your search.";
+        centerSearchBox.style.display = 'none';
+        browseAllBtn.style.display = 'inline-block';
+      } 
+      // CASE 2b: Matches found
+      else {
+        noResultsEl.style.display = 'none';
+
+        // Render Cards
+        gridEl.innerHTML = results.map(s => {
+          const isFav = favorites.some(f => f.id === s.id);
+
+          return `
+        <div class="tile">
+          <img src="${s.image}" alt="${s.name}">
+          <h3>${s.name}</h3>
+          <div class="saree-id">ID: ${s.id}</div>
+          <p>${s.desc}</p>
+          <p><strong>₹${s.price}</strong></p>
+
+          <div class="tile-actions">
+            <button onclick="addToCart('${s.id}')">Add to Cart</button>
+
+            <span class="fav-icon" onclick="toggleFavorite('${s.id}')">
+              ${isFav
+              ? `<svg width="22" height="22" viewBox="0 0 24 24" fill="red" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`
+              : `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21.5l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>`
+            }
+            </span>
+          </div>
+        </div>
+        `;
+        }).join('');
+      }
     }
 
-    function addToCart(i) {
-      const s = sarees[i];
-      const e = cart.find(c => c.id === s.id);
-      if (e) e.qty++; else cart.push({ ...s, qty: 1 });
+    // Function for the new Center Search Bar
+    function triggerMainSearch() {
+        const val = document.getElementById('mainPageInput').value.trim();
+        if(val) window.location.href = `search.html?q=${encodeURIComponent(val)}`;
+    }
+    
+    // Allow Enter key on Center Search Bar
+    document.getElementById("mainPageInput").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") triggerMainSearch();
+    });
+
+    /* --- SHARED ACTIONS --- */
+    function addToCart(id) {
+      const s = sarees.find(item => item.id === id);
+      if (!s) return;
+      const existing = cart.find(c => c.id === s.id);
+      if (existing) existing.qty++; else cart.push({ ...s, qty: 1 });
+
       localStorage.setItem('cart', JSON.stringify(cart));
       updateCartCount();
       showToast(`${s.name} added to cart`);
     }
 
-    function greetUser() { if (userName) greeting.innerHTML = `Hi, ${escapeHtml(userName)}!<br>Welcome to`; }
-
-    function saveUser() {
-      const val = document.getElementById('userNameInput').value.trim();
-      if (!val) { showToast("Please enter your name!"); return; }
-      localStorage.setItem('userName', val);
-      userName = val;
-      popup.style.display = 'none';
-      greetUser();
-      showToast(`Welcome, ${userName}!`);
+    function toggleFavorite(id) {
+      const s = sarees.find(item => item.id === id);
+      const index = favorites.findIndex(f => f.id === id);
+      if (index === -1) {
+        favorites.push(s);
+        showToast(`${s.name} added to favorites`);
+      } else {
+        favorites.splice(index, 1);
+        showToast(`${s.name} removed from favorites`);
+      }
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      performSearch();
     }
 
-    function renderFeedbacks() {
-      if (!feedbacks.length) { feedbackListEl.innerHTML = '<div style="color:#666;padding:8px 0">No feedback yet — be the first!</div>'; return; }
-      feedbackListEl.innerHTML = feedbacks.slice().reverse().map(f => `
-        <div class="feedback-item">
-          <div class="meta"><strong>${escapeHtml(f.name)}</strong> · ${new Date(f.ts).toLocaleString()}</div>
-          <div class="msg">${escapeHtml(f.message)}</div>
-        </div>`).join('');
-    }
+    function escapeHtml(str) { return String(str).replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[s])); }
 
-    function submitFeedback() {
-      const n = userName || "Guest";
-      const m = (fbMessageInput.value || "").trim();
-      if (!m) { showToast('Write feedback'); return; }
-      feedbacks.push({ name: n, message: m, ts: Date.now() });
-      localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
-      renderFeedbacks();
-      fbMessageInput.value = '';
-      showToast('Thanks for the feedback');
+    /* --- NAVBAR SCRIPTS --- */
+    function toggleMobileMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
     }
-    function clearFeedbackForm() { fbMessageInput.value = ''; }
-
-    // --- SEARCH FUNCTIONALITY ---
+    function toggleDrop(id) {
+      const body = document.getElementById(id);
+      const arrow = body.previousElementSibling.querySelector('.arrow');
+      if (body.style.display === "block") {
+        body.style.display = "none";
+        arrow.style.transform = "rotate(0deg)";
+      } else {
+        body.style.display = "block";
+        arrow.style.transform = "rotate(180deg)";
+      }
+    }
+    function toggleDesktopMenu() {
+      const menu = document.getElementById("desktopMenu");
+      const arrow = document.querySelector(".desk-arrow");
+      if (menu.style.display === "block") {
+        menu.style.display = "none";
+        arrow.style.transform = "rotate(0deg)";
+      } else {
+        menu.style.display = "block";
+        arrow.style.transform = "rotate(180deg)";
+      }
+    }
+    document.addEventListener("click", function(e) {
+        const menu = document.getElementById("desktopMenu");
+        const header = document.querySelector(".desktop-dropdown-header");
+        if(menu && header && !header.contains(e.target) && !menu.contains(e.target)){
+            menu.style.display = "none";
+            document.querySelector(".desk-arrow").style.transform = "rotate(0deg)";
+        }
+    });
+    function toggleDeskGroup(id) {
+      const body = document.getElementById(id);
+      const arrow = body.previousElementSibling.querySelector('.desk-arrow-small');
+      if (body.style.display === "block") {
+        body.style.display = "none";
+        arrow.style.transform = "rotate(0deg)";
+      } else {
+        body.style.display = "block";
+        arrow.style.transform = "rotate(180deg)";
+      }
+    }
+    
+    // Navbar Inline Search Logic
     function handleSearchClick() {
       const searchInput = document.getElementById("inlineSearch");
-      // Check if active
       if (searchInput.classList.contains("active")) {
         const query = searchInput.value.trim();
         if (query.length > 0) {
@@ -380,100 +461,22 @@
         searchInput.focus();
       }
     }
-
     document.getElementById("inlineSearch").addEventListener("keypress", function (event) {
       if (event.key === "Enter") {
         const query = this.value.trim();
-        if (query.length > 0) {
-          window.location.href = `search.html?q=${encodeURIComponent(query)}`;
-        }
+        if (query.length > 0) window.location.href = `search.html?q=${encodeURIComponent(query)}`;
       }
     });
 
-    // --- WHATSAPP ---
-    document.getElementById("whatsappBtn").addEventListener("click", () => {
-      const name = localStorage.getItem("userName") || "Customer";
-      const cartData = JSON.parse(localStorage.getItem("cart")) || [];
-      if (!cartData.length) {
-        window.open(`https://wa.me/919701343474?text=Hello Rudhvi Vasthra,%0AI'm ${encodeURIComponent(name)} and I have an enquiry.`, "_blank");
-        return;
-      }
-      let msg = `Hello Rudhvi Vasthra,%0AI'm ${encodeURIComponent(name)}. I'd like to place an order:%0A%0A`;
-      cartData.forEach(it => { msg += `🧵 ${encodeURIComponent(it.name)} (ID:${encodeURIComponent(it.id)}) x${it.qty} — ₹${it.price * it.qty}%0A`; });
-      const total = cartData.reduce((sum, i) => sum + i.price * i.qty, 0);
-      msg += `%0A💰 Total: ₹${total}%0A%0AThank you!`;
-      window.open(`https://wa.me/919701343474?text=${msg}`, "_blank");
-    });
-
-    function escapeHtml(str) { return String(str).replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[s])); }
-
+    // Init
     window.onload = () => {
       document.getElementById('year').textContent = new Date().getFullYear();
-      renderSarees(); updateCartCount(); renderFeedbacks();
-      if (userName) { greetUser(); } else popup.style.display = 'flex';
+      updateCartCount();
+      performSearch();
+      setTimeout(() => { document.querySelectorAll('.fade-up').forEach(el => el.style.opacity = '1'); }, 100);
     };
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const elements = document.querySelectorAll(".fade-up, .fade-down, .fade-left, .fade-right");
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add("fade-show");
-        });
-      }, { threshold: 0.2 });
-      elements.forEach(el => observer.observe(el));
-    });
-
-    function toggleMobileMenu() {
-      const menu = document.getElementById("mobileMenu");
-      menu.style.display = menu.style.display === "block" ? "none" : "block";
-    }
-
-    function toggleDrop(id) {
-      const body = document.getElementById(id);
-      const arrow = body.previousElementSibling.querySelector('.arrow');
-      if (body.style.display === "block") {
-        body.style.display = "none";
-        arrow.style.transform = "rotate(0deg)";
-      } else {
-        body.style.display = "block";
-        arrow.style.transform = "rotate(180deg)";
-      }
-    }
-
-    function toggleDesktopMenu() {
-      const menu = document.getElementById("desktopMenu");
-      const arrow = document.querySelector(".desk-arrow");
-      if (menu.style.display === "block") {
-        menu.style.display = "none";
-        arrow.style.transform = "rotate(0deg)";
-      } else {
-        menu.style.display = "block";
-        arrow.style.transform = "rotate(180deg)";
-      }
-    }
-
-    document.addEventListener("click", function (e) {
-      const menu = document.getElementById("desktopMenu");
-      const header = document.querySelector(".desktop-dropdown-header");
-      if (menu && header && !header.contains(e.target) && !menu.contains(e.target)) {
-        menu.style.display = "none";
-        const arr = document.querySelector(".desk-arrow");
-        if (arr) arr.style.transform = "rotate(0deg)";
-      }
-    });
-
-    function toggleDeskGroup(id) {
-      const body = document.getElementById(id);
-      const arrow = body.previousElementSibling.querySelector('.desk-arrow-small');
-      if (body.style.display === "block") {
-        body.style.display = "none";
-        arrow.style.transform = "rotate(0deg)";
-      } else {
-        body.style.display = "block";
-        arrow.style.transform = "rotate(180deg)";
-      }
-    }
   </script>
+
 </body>
 
 </html>
