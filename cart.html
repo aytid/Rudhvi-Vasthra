@@ -205,13 +205,11 @@
   const canvas = document.getElementById("upiQR");
 
   // UPI Info
-  const upiID = "adityathirumala20@oksbi";
+  const upiID = "siddu944015-2@okaxis";
   const upiName = "Rudhvi Vastraa";
 
-  // --- NEW: Generate Label {ID+Quantity} ---
-  // This creates a string like: "ID001*2 ID005*1"
-  const label = cart.map(item => `${item.id}*${item.qty}`).join(" ");
-
+  // This creates a string like: "ID001*2-ID005*1"
+  const label = cart.map(item => `${item.id}*${item.qty}`).join("-");
   // Construct UPI Link with the 'tn' (Transaction Note) parameter
   const upiLink =
     `upi://pay?pa=${encodeURIComponent(upiID)}` +
@@ -311,12 +309,11 @@ function payViaUPI() {
   const formattedTotal = total.toFixed(2);
   const uniqueRef = "TXN" + Date.now();
 
-  const upiID = "adityathirumala20@oksbi";
+  const upiID = "siddu944015-2@okaxis";
   const upiName = "Rudhvi Vastraa";
 
   // --- NEW: Generate Label {ID+Quantity} ---
-  const label = cart.map(item => `${item.id}*${item.qty}`).join(" ");
-
+  const label = cart.map(item => `${item.id}*${item.qty}`).join("-");
   const link =
     "upi://pay?" +
     "pa=" + encodeURIComponent(upiID) +       // Payee Address
