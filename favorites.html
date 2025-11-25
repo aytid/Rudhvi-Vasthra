@@ -8,416 +8,9 @@
   <link rel="icon" type="image/png" sizes="256x256" href="img-logo-removebg.png">
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
 
-  <style>
-    /* --- VARIABLES / GLOBALS --- */
-    :root {
-      --primary: #E62727;
-      --bg-cream: #F6EFD2;
-      --text: #000;
-      --beige: #CBB89F;
-      --dark-section: #0b0d0c;
-    }
-
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: var(--bg-cream);
-      color: var(--text);
-      padding-top: 80px;
-    }
-
-    /* --- NAVBAR --- */
-    .site-nav {
-      width: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      background: var(--beige);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      z-index: 1000;
-      transition: all 0.3s ease;
-    }
-
-    .site-nav .inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .nav-contact {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .nav-contact a {
-      text-decoration: none;
-      color: white;
-      font-size: 14px;
-    }
-
-    .hamburger {
-      display: none;
-      font-size: 32px;
-      cursor: pointer;
-      color: white;
-    }
-
-    .logo-img {
-      height: 70px;
-      width: auto;
-      transition: height 0.3s ease;
-      cursor: pointer;
-    }
-
-    .nav-icons {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .icon-btn {
-      width: 32px;
-      height: 32px;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      transition: 0.2s;
-    }
-
-    .icon-btn:hover {
-      transform: scale(1.1);
-    }
-
-    /* --- INLINE SEARCH STYLING --- */
-    .inline-search-input {
-      width: 0;
-      opacity: 0;
-      visibility: hidden;
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid transparent; 
-      color: white; 
-      font-size: 16px;
-      outline: none;
-      transition: all 0.4s ease; 
-      margin-right: 5px;
-    }
-
-    .inline-search-input.active {
-      width: 180px; 
-      opacity: 1;
-      visibility: visible;
-      border: 1px solid white; 
-      padding: 6px 12px;
-      border-radius: 4px;
-    }
-
-    .inline-search-input::placeholder {
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    .cart-badge {
-      position: absolute;
-      top: -6px;
-      right: -14px;
-      background: var(--primary);
-      color: #fff;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      font-size: 11px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: 600;
-      border: 2px solid var(--beige);
-    }
-
-    /* DROPDOWNS */
-    .desktop-dropdown { position: relative; }
-    .desktop-dropdown-header {
-      color: white;
-      cursor: pointer;
-      font-size: 14px;
-      display: flex;
-      gap: 5px;
-      align-items: center;
-    }
-    .desk-arrow { transition: transform 0.3s; }
-
-    .desktop-menu {
-      display: none;
-      position: absolute;
-      top: 35px;
-      left: 0;
-      background: var(--beige);
-      padding: 20px;
-      border-radius: 8px;
-      width: 260px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      z-index: 999;
-    }
-
-    .desk-group { margin-bottom: 12px; }
-    .desk-group-header {
-      color: white;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      font-weight: 600;
-    }
-    .desk-group-body { display: none; padding-left: 10px; }
-    .desk-group-body a {
-      display: block;
-      color: white;
-      padding: 4px 0;
-      font-size: 14px;
-      text-decoration: none;
-    }
-
-    /* MOBILE MENU */
-    .mobile-menu {
-      display: none;
-      background: var(--beige);
-      padding: 15px 0;
-      position: absolute;
-      top: 80px;
-      left: 0;
-      width: 100%;
-      z-index: 900;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .mobile-dropdown { padding: 0 20px; text-align: left; }
-    .mobile-dropdown-header {
-      font-size: 16px;
-      padding: 12px 0;
-      font-weight: 600;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      cursor: pointer;
-    }
-    .mobile-dropdown-body { display: none; padding-left: 12px; }
-    .mobile-dropdown-body a {
-      color: white;
-      padding: 8px 0;
-      font-size: 14px;
-      display: block;
-      text-decoration: none;
-    }
-    .mobile-contact {
-      display: block;
-      padding: 14px 0;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 600;
-      color: white;
-      text-decoration: none;
-    }
-
-    @media(max-width: 768px) {
-      .hamburger { display: block; }
-      .nav-contact { display: none; }
-      .logo-img { height: 40px !important; }
-      .inline-search-input.active { width: 120px; }
-    }
-
-    /* --- FAVORITES PAGE CONTENT --- */
-    main {
-      max-width: 1100px;
-      margin: 40px auto 60px;
-      padding: 0 20px;
-    }
-    
-    h1 {
-      font-family: "Playfair Display", serif;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    #favList {
-      display: grid;
-      /* Matches index grid logic */
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    /* Desktop 4 columns like index */
-    @media (min-width: 1024px) {
-      #favList {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    /* --- TILE CARD STYLE (Matched to Index) --- */
-    .tile {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      text-align: center;
-      padding-bottom: 10px;
-      transition: transform 0.2s ease;
-    }
-    
-    .tile:hover {
-        transform: translateY(-5px);
-    }
-
-    .tile img { width: 100%; height: 250px; object-fit: cover; }
-    .tile h3 { font-family: "Playfair Display", serif; margin: 10px 0 4px; font-size: 18px; color: var(--text); }
-    .saree-id { font-size: 13px; color: #777; margin-bottom: 6px; }
-    .tile p { margin: 5px 0; color: #555; font-size: 14px;} 
-    .tile p strong { color: #000; font-size: 16px; }
-
-    /* Action Buttons Container */
-    .tile-actions {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-      margin-top: 8px;
-      padding-bottom: 5px;
-    }
-
-    /* Add to Cart Button */
-    .tile button {
-      background: var(--beige);
-      color: #000;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: .2s;
-    }
-
-    .tile button:hover {
-      background: #b8a78f;
-      transform: translateY(-2px);
-    }
-
-    /* Heart Icon */
-    .fav-icon {
-      font-size: 24px;
-      cursor: pointer;
-      transition: 0.2s;
-      display: flex;
-      align-items: center;
-    }
-    .fav-icon:hover { transform: scale(1.2); }
-
-
-    /* --- CONTACT SECTION STYLES --- */
-    .contact {
-      background: var(--dark-section);
-      color: #fff;
-      padding: 80px 20px;
-      text-align: center;
-      margin-top: 60px;
-      position: relative;
-    }
-
-    .contact h2 {
-      font-family: "Playfair Display", serif;
-      font-size: 38px;
-      margin: 0 0 16px;
-      color: #fff;
-    }
-
-    .contact p {
-      font-family: "Poppins", sans-serif;
-      font-size: 16px;
-      color: #b0b0b0;
-      margin: 0 auto 40px;
-      max-width: 600px;
-      line-height: 1.6;
-    }
-
-    /* Flex Container for Buttons */
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    /* Button Pills */
-    .contact-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 14px 28px;
-      border-radius: 50px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 15px;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .contact-pill svg {
-      width: 20px;
-      height: 20px;
-      fill: currentColor;
-      transition: transform 0.3s ease;
-    }
-
-    /* Hover Effects */
-    .contact-pill:hover {
-      background: var(--primary);
-      border-color: var(--primary);
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px rgba(230, 39, 39, 0.4);
-    }
-
-    .contact-pill:hover svg {
-      transform: scale(1.1);
-    }
-
-    @media (max-width: 768px) {
-      .contact { padding: 60px 20px; }
-      .contact h2 { font-size: 30px; }
-      .contact-links { flex-direction: column; gap: 15px; }
-      .contact-pill { width: 100%; max-width: 320px; justify-content: center; }
-    }
-
-    footer {
-      text-align: center;
-      padding: 22px 0;
-      background: white;
-      color: #777;
-      border-top: 1px solid #eee;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--primary);
-      color: white;
-      padding: 12px 22px;
-      border-radius: 8px;
-      font-weight: 600;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-      z-index: 99999;
-    }
-    .toast.show { opacity: 1; }
-
-  </style>
 </head>
 
 <body>
@@ -478,7 +71,9 @@
       <a href="#">Contact Us</a>
     </div>
 
-    <img class="logo-img" src="text-logo.png" onclick="window.location.href='index.html'" alt="Rudhvi Vastraa Logo" />
+    <div class="brand">
+        <img class="logo-img" src="text-logo.png" onclick="window.location.href='index.html'" alt="Rudhvi Vastraa Logo" />
+    </div>
 
     <div class="nav-icons">
       <input type="text" id="inlineSearch" class="inline-search-input" placeholder="Type to search...">
@@ -677,28 +272,38 @@ function renderFavorites(){
   }
 
   // Updated to match the .tile card structure
-  list.innerHTML = favorites.map((s)=>`
-    <div class="tile">
-      <img src="${s.image}" alt="${s.name}">
-      <h3>${s.name}</h3>
-      <div class="saree-id">ID: ${s.id}</div>
-      <p>${s.desc || ''}</p>
-      <p><strong>₹${s.price}</strong></p>
+list.innerHTML = favorites.map((s)=>`
+  <div class="tile">
 
-      <div class="tile-actions">
-        <button onclick="addToCart('${s.id}')">Add to Cart</button>
-        
-        <span class="fav-icon" onclick="removeFavorite('${s.id}')" title="Remove from Favorites">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="none">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
-            2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
-            14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
-            6.86-8.55 11.54L12 21.35z"/>
-          </svg>
-        </span>
+    <div style="cursor:pointer;" onclick="window.location.href='product-details.html?id=${s.id}'">
+      <div class="img-wrapper">
+        <img src="${s.image}" alt="${s.name}">
       </div>
     </div>
-  `).join("");
+
+    <div class="tile-content" onclick="window.location.href='product-details.html?id=${s.id}'" style="cursor:pointer;">
+      <h3>${s.name}</h3>
+      <p class="desc">${(s.desc || "").substring(0,50)}...</p>
+      <p class="price"><strong>₹${s.price}</strong></p>
+    </div>
+
+    <div class="tile-actions">
+      <button class="btn-cart" onclick="addToCart('${s.id}')">Add to Cart</button>
+
+      <div class="fav-btn" onclick="removeFavorite('${s.id}')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#d32f2f"
+        xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+          2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+          14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+          6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+`).join("");
+
   updateCartCount();
 }
 
@@ -753,8 +358,16 @@ document.getElementById("inlineSearch").addEventListener("keypress", function(e)
   }
 });
 
-// Init
-renderFavorites();
+/* --- INIT --- */
+window.onload = () => {
+  document.getElementById('year').textContent = new Date().getFullYear();
+  renderFavorites();
+  
+  // 🔥 IMPORTANT: This makes the contact section visible
+  setTimeout(() => { 
+    document.querySelectorAll('.fade-up').forEach(el => el.classList.add('fade-show')); 
+  }, 100);
+};
 </script>
 <div id="toast" class="toast"></div>
 
