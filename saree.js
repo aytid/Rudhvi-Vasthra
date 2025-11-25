@@ -56,7 +56,7 @@ window.sarees = [
     id:"RS0002",
     name:"Banarasi Saree",
     desc:"Classic zari woven masterpiece",
-    price:9800,
+    price:1,
     image:"designer.jpg",
 
     images: [
@@ -81,7 +81,7 @@ window.sarees = [
     id:"RS0003",
     name:"Chiffon Saree",
     desc:"Lightweight and breezy",
-    price:1800,
+    price:2,
     image:"traditional.jpg",
 
     images: [
