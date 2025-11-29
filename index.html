@@ -297,16 +297,6 @@ function addToCart(id) {
       greetUser();
       showToast(`Welcome, ${userName}!`);
     }
-
-    function renderFeedbacks() {
-      if (!feedbacks.length) { feedbackListEl.innerHTML = '<div style="color:#666;padding:8px 0">No feedback yet — be the first!</div>'; return; }
-      feedbackListEl.innerHTML = feedbacks.slice().reverse().map(f => `
-        <div class="feedback-item">
-          <div class="meta"><strong>${escapeHtml(f.name)}</strong> · ${new Date(f.ts).toLocaleString()}</div>
-          <div class="msg">${escapeHtml(f.message)}</div>
-        </div>`).join('');
-    }
-
 async function submitFeedback() {
   const message = fbMessageInput.value.trim();
   if (!message) {
@@ -335,6 +325,10 @@ async function submitFeedback() {
 
     fbMessageInput.value = "";
     showToast("Thanks for the feedback!");
+
+    // 🟢 Refresh feedback list after sending
+    await loadFeedbacks();
+
   } catch (err) {
     console.error(err);
     showToast("Network error");
@@ -344,16 +338,43 @@ async function submitFeedback() {
 
 async function loadFeedbacks() {
   try {
-    const res = await fetch(
-      "https://raw.githubusercontent.com/aytid/Rudhvi-Vasthra/main/feedback.json?ts=" + Date.now(),
-      { cache: "no-store" }
-    );
+    // 🟢 Cache-busting to force fresh data from GitHub
+    const url = "https://raw.githubusercontent.com/aytid/Rudhvi-Vasthra/main/feedback.json?ts=" + Date.now();
+
+    const res = await fetch(url, { cache: "no-store" });
     feedbacks = await res.json();
+
     renderFeedbacks();
   } catch (err) {
     console.error("Failed to load feedback:", err);
   }
 }
+
+
+function renderFeedbacks() {
+  if (!feedbacks.length) {
+    feedbackListEl.innerHTML = `
+      <div style="color:#666;padding:8px 0">No feedback yet — be the first!</div>
+    `;
+    return;
+  }
+
+  feedbackListEl.innerHTML = feedbacks
+    .slice()
+    .reverse()
+    .map(f => `
+      <div class="feedback-item">
+        <div class="meta">
+          <strong>${escapeHtml(f.name)}</strong> · ${new Date(f.ts).toLocaleString()}
+        </div>
+        <div class="msg">${escapeHtml(f.message)}</div>
+      </div>
+    `)
+    .join('');
+}
+
+
+
 
 
 
