@@ -1,0 +1,27 @@
+name: Save Feedback
+
+on:
+  repository_dispatch:
+    types: [save-feedback]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Decode feedback data
+        id: payload
+        run: echo '${{ github.event.client_payload.data }}' > new-feedback.json
+
+      - name: Merge feedback into feedback.json
+        run: |
+          echo "Merging feedback..."
+          jq -s '.[0] + [.[1]]' feedback.json new-feedback.json > merged.json
+          mv merged.json feedback.json
+
+      - name: Commit feedback.json
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "New customer feedback added"
+          branch: main
