@@ -13,39 +13,11 @@
   <link rel="icon" type="image/png" sizes="256x256" href="img-logo-removebg.png">
 
   <script src="https://cdn.jsdelivr.net/npm/qrious/dist/qrious.min.js"></script>
-
-  <style>
-    /* PAYMENT CONFIRM POPUP */
-    .popup-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    .popup-box {
-      background: #fff;
-      padding: 25px;
-      border-radius: 12px;
-      width: 300px;
-      text-align: center;
-    }
-
-    .popup-box input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-  </style>
 </head>
 
 <body>
 
+  <!-- NAVBAR -->
   <div class="site-nav">
     <div class="inner">
       <img class="logo-img" src="text-logo.png" onclick="window.location.href='index.html'" alt="Rudhvi Vastraa Logo" />
@@ -65,17 +37,17 @@
               stroke="#FFFFFF" stroke-width="2" />
           </svg>
         </a>
-        <a href="cart.html" class="icon-btn cart-btn">
+        <a href="index.html" class="icon-btn cart-btn">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M3 10.5L12 3L21 10.5V20C21 20.6 20.6 21 20 21H4C3.4 21 3 20.6 3 20V10.5Z" stroke="white"
               stroke-width="1.8" />
             <path d="M9 21V14H15V21" stroke="white" stroke-width="1.8" />
           </svg>
-          <span id="cartCount" style="display:none"></span>
         </a>
       </div>
     </div>
   </div>
+
 
   <main>
     <h1>Your Cart</h1>
@@ -83,7 +55,6 @@
     <div id="cartList"></div>
 
     <div class="cart-footer-area" id="cartFooter">
-
       <div class="footer-left-content">
         <div id="totalPrice"></div>
         <button id="proceedBtn" class="payBtn">Proceed to Payment</button>
@@ -93,36 +64,48 @@
         <h3>Scan to Pay</h3>
         <canvas id="upiQR"></canvas>
       </div>
-
     </div>
   </main>
 
-  <!-- PAYMENT CONFIRMATION POPUP -->
-  <div id="paymentConfirmPopup" class="popup-overlay">
-    <div class="popup-box">
-      <h2>Payment Confirmation</h2>
+  <!-- CONTACT SECTION -->
+  <section class="contact">
+    <div style="max-width:1000px;margin:auto;">
+      <h2>Get in Touch</h2>
+      <p>For product enquiries or assistance, reach out to us below.</p>
+      <div class="contact-links">
 
-      <label>Upload Payment Screenshot:</label>
-      <input type="file" id="paymentScreenshot" accept="image/*">
+        <a href="https://wa.me/918106662341" target="_blank" class="contact-pill">
+          WhatsApp: +91 8106662341
+        </a>
 
-      <label>Last 4 digits of UPI Transaction ID:</label>
-      <input type="text" id="upiRefInput" maxlength="4" placeholder="e.g. 9821">
+        <a href="https://instagram.com/rudhvi_vastraa" target="_blank" class="contact-pill">@rudhvi_vastraa</a>
+        <a href="https://youtube.com/@rudhvivastraa" target="_blank" class="contact-pill">YouTube</a>
 
-      <button class="popupBtn" onclick="submitPaymentConfirmation()">Submit Confirmation</button>
-      <button class="popupBtn closeBtn" onclick="closePaymentConfirmPopup()">Cancel</button>
+      </div>
     </div>
-  </div>
+  </section>
 
   <footer>
     © <span id="year"></span> Rudhvi Vastraa — All rights reserved
   </footer>
 
+  <!-- PAYMENT POPUP -->
+  <div id="paymentPopup">
+    <div id="popupBox">
+      <h2>Payment Options</h2>
+      <button class="popupBtn" onclick="payViaUPI()">Pay via UPI App</button>
+      <button class="popupBtn" onclick="payViaWhatsApp()">Order via WhatsApp</button>
+      <button class="popupBtn closeBtn" onclick="closePopup()">Cancel</button>
+    </div>
+  </div>
+
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    /* CART LOADING */
+    /* CART DATA */
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+    /* RENDER CART */
     function renderCart() {
       const list = document.getElementById("cartList");
       const totalEl = document.getElementById("totalPrice");
@@ -136,74 +119,83 @@
 
       footerEl.style.display = "block";
 
-      list.innerHTML = cart
-        .map((item, i) => `
+      list.innerHTML = cart.map((item, i) => `
         <div class="tile">
-          <img src="${item.image}" alt="${item.name}">
+          <div class="img-wrapper">
+            <img src="${item.image}" alt="${item.name}">
+          </div>
+
           <div class="tile-content">
             <h3>${item.name}</h3>
             <p>ID: ${item.id}</p>
             <p><strong>₹${item.price}</strong></p>
           </div>
+
           <div class="tile-actions">
             <button class="qty-btn" onclick="changeQty(${i}, -1)">−</button>
             <span>${item.qty}</span>
             <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
           </div>
         </div>
-      `)
-        .join("");
+      `).join("");
 
-      const total = cart.reduce((s, x) => s + x.price * x.qty, 0);
+      const total = cart.reduce((sum, i) => sum + i.qty * i.price, 0);
+
       totalEl.innerHTML = `<h3>Total: ₹${total.toLocaleString()}</h3>`;
+
       generateDynamicQR();
     }
 
+    /* CHANGE QTY */
     function changeQty(i, delta) {
       cart[i].qty += delta;
       if (cart[i].qty <= 0) cart.splice(i, 1);
-
       localStorage.setItem("cart", JSON.stringify(cart));
       renderCart();
     }
 
-    /* QR CODE */
+    /* QR GENERATION */
     function generateDynamicQR() {
-      const total = cart.reduce((s, i) => s + i.qty * i.price, 0);
-      if (total <= 0) return;
+      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const qrBox = document.getElementById("dynamicQRBox");
+
+      if (total <= 0) {
+        qrBox.style.display = "none";
+        return;
+      }
+
+      qrBox.style.display = "block";
 
       const upiID = "siddu944015-2@okaxis";
       const upiName = "Rudhvi Vastraa";
-
-      const label = cart.map(item => `${item.id}*${item.qty}`).join("-");
-
-      const upi = `upi://pay?pa=${upiID}&pn=${upiName}&am=${total}&cu=INR&tn=${label}`;
+      const label = cart.map(i => `${i.id}*${i.qty}`).join("-");
+      const upiLink =
+        `upi://pay?pa=${encodeURIComponent(upiID)}` +
+        `&pn=${encodeURIComponent(upiName)}` +
+        `&am=${total}` +
+        `&cu=INR` +
+        `&tn=${encodeURIComponent(label)}`;
 
       new QRious({
         element: document.getElementById("upiQR"),
-        value: upi,
-        size: 200,
-        level: "H"
+        value: upiLink,
+        size: 200
       });
     }
 
-    /* PAYMENT POPUP */
-    document.getElementById("proceedBtn").onclick = () => {
-      payViaUPI();
+    /* POPUP CONTROL */
+    const proceedBtn = document.getElementById("proceedBtn");
+    if (proceedBtn) proceedBtn.onclick = () => {
+      document.getElementById("paymentPopup").style.display = "flex";
     };
 
-    function openPaymentConfirmPopup() {
-      document.getElementById("paymentConfirmPopup").style.display = "flex";
+    function closePopup() {
+      document.getElementById("paymentPopup").style.display = "none";
     }
 
-    function closePaymentConfirmPopup() {
-      document.getElementById("paymentConfirmPopup").style.display = "none";
-    }
-
-    /* UPI PAYMENT */
+    /* PAY VIA UPI APP */
     function payViaUPI() {
       const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-      if (total <= 0) return alert("Cart is empty");
 
       const upiID = "siddu944015-2@okaxis";
       const upiName = "Rudhvi Vastraa";
@@ -211,78 +203,51 @@
       const ref = "TXN" + Date.now();
 
       const link =
-        "upi://pay?" +
-        "pa=" + encodeURIComponent(upiID) +
-        "&pn=" + encodeURIComponent(upiName) +
-        "&am=" + total +
-        "&cu=INR" +
-        "&tr=" + ref +
-        "&tn=" + encodeURIComponent(label);
+        `upi://pay?pa=${upiID}` +
+        `&pn=${encodeURIComponent(upiName)}` +
+        `&am=${total}` +
+        `&cu=INR` +
+        `&tr=${ref}` +
+        `&tn=${encodeURIComponent(label)}`;
 
       window.location.href = link;
 
-      setTimeout(() => openPaymentConfirmPopup(), 1800);
+      // Auto WhatsApp message
+      setTimeout(() => {
+        sendWhatsAppMessage(total, label);
+      }, 2000);
     }
 
-    /* SUBMIT CONFIRMATION */
-    async function submitPaymentConfirmation() {
-      const file = document.getElementById("paymentScreenshot").files[0];
-      const ref = document.getElementById("upiRefInput").value.trim();
+    /* SEND WHATSAPP CONFIRMATION */
+    function sendWhatsAppMessage(total, label) {
+      const name = localStorage.getItem("userName") || "Customer";
 
-      if (!file) return alert("Upload screenshot");
-      if (ref.length !== 4) return alert("Enter last 4 digits");
+      let msg = `Hello Rudhvi Vastraa,%0A` +
+        `I have completed the UPI payment.%0A` +
+        `Name: ${name}%0A` +
+        `Order Items: ${label}%0A` +
+        `Total Paid: ₹${total}%0A`;
 
-      const reader = new FileReader();
-      reader.onload = async () => {
-        const screenshot = reader.result;
-
-        const orderData = {
-          name: localStorage.getItem("userName") || "Customer",
-          upiRef: ref,
-          cart: cart,
-          total: cart.reduce((s, i) => s + i.qty * i.price, 0),
-          ts: Date.now(),
-          screenshot: screenshot
-        };
-
-        await fetch("https://YOUR-WORKER-URL.workers.dev/order", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(orderData)
-        });
-
-        sendWhatsAppConfirmation(orderData);
-        closePaymentConfirmPopup();
-        alert("Payment submitted!");
-      };
-
-      reader.readAsDataURL(file);
+      window.open(`https://wa.me/918106662341?text=${msg}`, "_blank");
     }
 
-    /* WHATSAPP */
-    function sendWhatsAppConfirmation(order) {
-      let msg =
-        `*Payment Confirmation*\n` +
-        `Name: ${order.name}\n` +
-        `UPI Ref: ${order.upiRef}\n` +
-        `Amount: ₹${order.total}\n\n` +
-        `*Order Details:*\n`;
+    /* ALTERNATE WHATSAPP ORDER */
+    function payViaWhatsApp() {
+      const name = localStorage.getItem("userName") || "Customer";
+      let msg = `Hello Rudhvi Vastraa,%0AI'm ${name}%0AI want to order:%0A`;
 
-      order.cart.forEach(i => {
-        msg += `${i.name} (ID:${i.id}) x${i.qty} — ₹${i.price * i.qty}\n`;
+      cart.forEach(i => {
+        msg += `${i.name} (ID:${i.id}) x${i.qty} — ₹${i.price * i.qty}%0A`;
       });
 
-      msg += `\nScreenshot saved.\nThank you ❤️`;
+      const total = cart.reduce((s, i) => s + i.qty * i.price, 0);
+      msg += `%0ATotal: ₹${total}`;
 
-      window.open(
-        `https://wa.me/918106662341?text=${encodeURIComponent(msg)}`,
-        "_blank"
-      );
+      window.open(`https://wa.me/918106662341?text=${msg}`, "_blank");
     }
 
     renderCart();
   </script>
 
 </body>
-
 </html>
