@@ -243,6 +243,19 @@
       msg.style.display = "block";
       setTimeout(() => msg.style.display = "none", 3000);
     }
+
+      function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
+
+      const badge = document.getElementById("cartCount");
+      if (badge) {
+        badge.textContent = count;
+        badge.style.display = count > 0 ? "inline-block" : "none";
+      }
+    }
+
+    updateCartCount();
   </script>
 
 </body>
