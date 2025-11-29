@@ -344,13 +344,17 @@ async function submitFeedback() {
 
 async function loadFeedbacks() {
   try {
-    const res = await fetch("https://raw.githubusercontent.com/aytid/Rudhvi-Vasthra/main/feedback.json");
+    const res = await fetch(
+      "https://raw.githubusercontent.com/aytid/Rudhvi-Vasthra/main/feedback.json?ts=" + Date.now(),
+      { cache: "no-store" }
+    );
     feedbacks = await res.json();
     renderFeedbacks();
   } catch (err) {
     console.error("Failed to load feedback:", err);
   }
 }
+
 
 
     function clearFeedbackForm() { fbMessageInput.value = ''; }
