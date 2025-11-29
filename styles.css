@@ -92,7 +92,7 @@ h1, h2, h3 { font-family: "Playfair Display", serif; }
   .hamburger { display: block; }
   .nav-contact { display: none; }
   .site-nav .inner { padding: 8px 15px; height: 80px; }
-  .logo-img { height: 40px !important; }
+  .logo-img { height: 30px !important; }
   .nav-icons { gap: 12px; }
   .inline-search-input.active { width: 120px; }
 }
