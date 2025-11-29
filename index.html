@@ -309,7 +309,10 @@ function addToCart(id) {
 
 async function submitFeedback() {
   const message = fbMessageInput.value.trim();
-  if (!message) return showToast("Please write feedback!");
+  if (!message) {
+    showToast("Please write feedback!");
+    return;
+  }
 
   const payload = {
     name: userName || "Guest",
@@ -317,21 +320,25 @@ async function submitFeedback() {
     ts: Date.now()
   };
 
-  // CREATE GITHUB ISSUE (NO TOKEN NEEDED)
-  await fetch("https://api.github.com/repos/aytid/Rudhvi-Vasthra/issues", {
-    method: "POST",
-    headers: {
-      "Accept": "application/vnd.github+json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      title: "New Feedback",
+  try {
+    const res = await fetch("https://rudhvi-vastraa.adityathirumala20.workers.dev", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
-    })
-  });
+    });
 
-  fbMessageInput.value = "";
-  showToast("Thanks for the feedback!");
+    if (!res.ok) {
+      showToast("Error sending feedback");
+      console.error(await res.text());
+      return;
+    }
+
+    fbMessageInput.value = "";
+    showToast("Thanks for the feedback!");
+  } catch (err) {
+    console.error(err);
+    showToast("Network error");
+  }
 }
 
 
