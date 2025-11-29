@@ -307,16 +307,35 @@ function addToCart(id) {
         </div>`).join('');
     }
 
-    function submitFeedback() {
-      const n = userName || "Guest";
-      const m = (fbMessageInput.value || "").trim();
-      if (!m) { showToast('Write feedback'); return; }
-      feedbacks.push({ name: n, message: m, ts: Date.now() });
-      localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
-      renderFeedbacks();
-      fbMessageInput.value = '';
-      showToast('Thanks for the feedback');
-    }
+async function submitFeedback() {
+  const message = fbMessageInput.value.trim();
+  if (!message) return showToast("Please write feedback!");
+
+  const payload = {
+    name: userName || "Guest",
+    message: message,
+    ts: Date.now()
+  };
+
+  // send to GitHub workflow
+  await fetch("https://api.github.com/repos/aytid/Rudhvi-Vasthra/dispatches", {
+    method: "POST",
+    headers: {
+      "Accept": "application/vnd.github.everest-preview+json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      event_type: "save-feedback",
+      client_payload: {
+        data: JSON.stringify(payload)
+      }
+    })
+  });
+
+  fbMessageInput.value = "";
+  showToast("Thanks for the feedback!");
+}
+
     function clearFeedbackForm() { fbMessageInput.value = ''; }
 
     // --- SEARCH FUNCTIONALITY ---
