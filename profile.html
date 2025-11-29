@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Profile — Rudhvi Vastraa</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="img-logo-removebg.png">
+
+  <style>
+    .profile-container {
+      max-width: 700px;
+      margin: 120px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .profile-title {
+      text-align: center;
+      font-family: "Playfair Display", serif;
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .profile-sub {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #777;
+      font-size: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: "Poppins", sans-serif;
+      background: #fafafa;
+    }
+
+    .save-btn {
+      width: 100%;
+      padding: 14px;
+      background: #E62727;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .save-btn:hover {
+      background: #c41f1f;
+    }
+
+    .success-msg {
+      background: #d4f7d4;
+      padding: 12px;
+      border-radius: 8px;
+      color: #136d13;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 20px;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <div class="site-nav">
+    <div class="inner">
+      <img class="logo-img" src="text-logo.png" onclick="window.location.href='index.html'" />
+
+      <div class="nav-icons">
+        <a href="index.html" class="icon-btn">
+          <svg width="24" height="24" fill="none" stroke="white" stroke-width="2"
+            viewBox="0 0 24 24">
+            <path d="M3 12L12 3L21 12" />
+            <path d="M5 10v10h14V10" />
+          </svg>
+        </a>
+
+        <a href="favorites.html" class="icon-btn">
+          <svg width="24" height="24" fill="none" stroke="white" stroke-width="2"
+            viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+                     2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+                     14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 
+                     11.54L12 21.35z" />
+          </svg>
+        </a>
+
+        <a href="profile.html" class="icon-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="white" stroke-width="2">
+            <circle cx="12" cy="7" r="4" />
+            <path d="M4 21c0-4 4-7 8-7s8 3 8 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE FORM -->
+  <div class="profile-container">
+    <h1 class="profile-title">Your Profile</h1>
+    <p class="profile-sub">Your details help us deliver your orders safely</p>
+
+    <div class="success-msg" id="successMsg">Profile saved successfully ✔</div>
+
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="fullName" placeholder="Enter your full name">
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input type="text" id="phone" placeholder="10-digit mobile number">
+    </div>
+
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" id="email" placeholder="example@gmail.com">
+    </div>
+
+    <div class="form-group">
+      <label>House / Flat / Door Number</label>
+      <input type="text" id="house" placeholder="Ex: 2-156/1">
+    </div>
+
+    <div class="form-group">
+      <label>Street / Colony</label>
+      <input type="text" id="street" placeholder="Ex: Shanti Nagar">
+    </div>
+
+    <div class="form-group">
+      <label>City</label>
+      <input type="text" id="city" placeholder="Ex: Hyderabad">
+    </div>
+
+    <div class="form-group">
+      <label>State</label>
+      <input type="text" id="state" placeholder="Ex: Telangana">
+    </div>
+
+    <div class="form-group">
+      <label>Pincode</label>
+      <input type="text" id="pincode" placeholder="Ex: 500072">
+    </div>
+
+    <button class="save-btn" onclick="saveProfile()">Save Profile</button>
+  </div>
+
+  <script>
+    // Load from localStorage on page load
+    window.onload = () => {
+      const fields = ["fullName", "phone", "email", "house", "street", "city", "state", "pincode"];
+      fields.forEach(id => {
+        document.getElementById(id).value = localStorage.getItem(id) || "";
+      });
+    };
+
+    // Save profile
+    function saveProfile() {
+      const fields = ["fullName", "phone", "email", "house", "street", "city", "state", "pincode"];
+
+      fields.forEach(id => {
+        localStorage.setItem(id, document.getElementById(id).value.trim());
+      });
+
+      // Also store userName for checkout
+      localStorage.setItem("userName", document.getElementById("fullName").value.trim());
+
+      const msg = document.getElementById("successMsg");
+      msg.style.display = "block";
+      setTimeout(() => msg.style.display = "none", 3000);
+    }
+  </script>
+
+</body>
+
+</html>
