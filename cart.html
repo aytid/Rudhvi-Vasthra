@@ -9,6 +9,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
     rel="stylesheet">
+
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/png" sizes="256x256" href="img-logo-removebg.png">
 
@@ -20,9 +21,12 @@
   <!-- NAVBAR -->
   <div class="site-nav">
     <div class="inner">
-      <img class="logo-img" src="text-logo.png" onclick="window.location.href='index.html'" alt="Rudhvi Vastraa Logo" />
+
+      <img class="logo-img" src="text-logo.png" onclick="window.location.href='index.html'" alt="Logo" />
 
       <div class="nav-icons">
+
+        <!-- SEARCH -->
         <input type="text" id="inlineSearch" class="inline-search-input" placeholder="Type to search...">
         <a href="javascript:void(0)" class="icon-btn" onclick="handleSearchClick()">
           <svg width="24" height="24" fill="none">
@@ -30,35 +34,40 @@
             <line x1="16" y1="16" x2="21" y2="21" stroke="white" stroke-width="1.8"></line>
           </svg>
         </a>
+
+        <!-- FAVORITES ICON -->
         <a href="favorites.html" class="icon-btn">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-              stroke="#FFFFFF" stroke-width="2" />
-          </svg>
-        </a>
-        <a href="index.html" class="icon-btn cart-btn">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M3 10.5L12 3L21 10.5V20C21 20.6 20.6 21 20 21H4C3.4 21 3 20.6 3 20V10.5Z" stroke="white"
-              stroke-width="1.8" />
-            <path d="M9 21V14H15V21" stroke="white" stroke-width="1.8" />
+          <svg width="24" height="24" fill="none" stroke="#fff" stroke-width="2">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+                     2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+                     C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
+                     c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
           </svg>
         </a>
 
-        <a href="profile.html" class="icon-btn" aria-label="Profile">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="7" r="4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M4 21c0-4 4-7 8-7s8 3 8 7" 
-          stroke="#FFFFFF" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- CART ICON -->
+        <a href="cart.html" class="icon-btn">
+          <svg width="24" height="24" stroke="#fff" stroke-width="2" fill="none">
+            <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10.5Z" />
+            <path d="M9 21V14h6v7" />
           </svg>
         </a>
-        
+
+        <!-- PROFILE ICON -->
+        <a href="profile.html" class="icon-btn" aria-label="Profile">
+          <svg width="24" height="24" fill="none" stroke="#fff" stroke-width="2"
+            viewBox="0 0 24 24">
+            <circle cx="12" cy="7" r="4" />
+            <path d="M4 21c0-4 4-7 8-7s8 3 8 7" />
+          </svg>
+        </a>
+
       </div>
     </div>
   </div>
 
 
+  <!-- CART -->
   <main>
     <h1>Your Cart</h1>
 
@@ -77,27 +86,25 @@
     </div>
   </main>
 
+
   <!-- CONTACT SECTION -->
   <section class="contact">
-    <div style="max-width:1000px;margin:auto;">
+    <div style="max-width:1000px;margin:auto;text-align:center;">
       <h2>Get in Touch</h2>
-      <p>For product enquiries or assistance, reach out to us below.</p>
+
       <div class="contact-links">
-
-        <a href="https://wa.me/918106662341" target="_blank" class="contact-pill">
-          WhatsApp: +91 8106662341
-        </a>
-
+        <a href="https://wa.me/918106662341" target="_blank" class="contact-pill">WhatsApp: +91 8106662341</a>
         <a href="https://instagram.com/rudhvi_vastraa" target="_blank" class="contact-pill">@rudhvi_vastraa</a>
         <a href="https://youtube.com/@rudhvivastraa" target="_blank" class="contact-pill">YouTube</a>
-
       </div>
     </div>
   </section>
 
+
   <footer>
     © <span id="year"></span> Rudhvi Vastraa — All rights reserved
   </footer>
+
 
   <!-- PAYMENT POPUP -->
   <div id="paymentPopup">
@@ -109,20 +116,49 @@
     </div>
   </div>
 
+
+
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    /* CART DATA */
+
+    /* -------------------------- SEARCH FUNCTION -------------------------- */
+    function handleSearchClick() {
+      const searchInput = document.getElementById("inlineSearch");
+
+      if (searchInput.classList.contains("active")) {
+        const query = searchInput.value.trim();
+        if (query.length > 0) {
+          window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+        } else {
+          searchInput.classList.remove("active");
+        }
+      } else {
+        searchInput.classList.add("active");
+        searchInput.focus();
+      }
+    }
+
+    document.getElementById("inlineSearch").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        const query = this.value.trim();
+        if (query.length > 0)
+          window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+      }
+    });
+
+
+
+    /* ------------------------------ CART RENDER ------------------------------ */
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    /* RENDER CART */
     function renderCart() {
       const list = document.getElementById("cartList");
       const totalEl = document.getElementById("totalPrice");
       const footerEl = document.getElementById("cartFooter");
 
       if (cart.length === 0) {
-        list.innerHTML = `<p style="text-align:center;padding:40px;">Your cart is empty.</p>`;
+        list.innerHTML = `<p style="padding:40px;text-align:center;">Your cart is empty.</p>`;
         footerEl.style.display = "none";
         return;
       }
@@ -131,6 +167,7 @@
 
       list.innerHTML = cart.map((item, i) => `
         <div class="tile">
+
           <div class="img-wrapper">
             <img src="${item.image}" alt="${item.name}">
           </div>
@@ -146,45 +183,46 @@
             <span>${item.qty}</span>
             <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
           </div>
+
         </div>
       `).join("");
 
-      const total = cart.reduce((sum, i) => sum + i.qty * i.price, 0);
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
 
       totalEl.innerHTML = `<h3>Total: ₹${total.toLocaleString()}</h3>`;
 
       generateDynamicQR();
     }
 
-    /* CHANGE QTY */
+
+
+    /* --------------------------- CHANGE QUANTITY ---------------------------- */
     function changeQty(i, delta) {
       cart[i].qty += delta;
       if (cart[i].qty <= 0) cart.splice(i, 1);
+
       localStorage.setItem("cart", JSON.stringify(cart));
       renderCart();
     }
 
-    /* QR GENERATION */
+
+
+    /* ---------------------------- DYNAMIC QR ---------------------------- */
     function generateDynamicQR() {
-      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const qrBox = document.getElementById("dynamicQRBox");
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
 
       if (total <= 0) {
-        qrBox.style.display = "none";
+        document.getElementById("dynamicQRBox").style.display = "none";
         return;
       }
 
-      qrBox.style.display = "block";
+      document.getElementById("dynamicQRBox").style.display = "block";
 
       const upiID = "siddu944015-2@okaxis";
       const upiName = "Rudhvi Vastraa";
       const label = cart.map(i => `${i.id}*${i.qty}`).join("-");
-      const upiLink =
-        `upi://pay?pa=${encodeURIComponent(upiID)}` +
-        `&pn=${encodeURIComponent(upiName)}` +
-        `&am=${total}` +
-        `&cu=INR` +
-        `&tn=${encodeURIComponent(label)}`;
+
+      const upiLink = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(upiName)}&am=${total}&cu=INR&tn=${encodeURIComponent(label)}`;
 
       new QRious({
         element: document.getElementById("upiQR"),
@@ -193,9 +231,10 @@
       });
     }
 
-    /* POPUP CONTROL */
-    const proceedBtn = document.getElementById("proceedBtn");
-    if (proceedBtn) proceedBtn.onclick = () => {
+
+
+    /* ----------------------------- POPUP LOGIC ----------------------------- */
+    document.getElementById("proceedBtn").onclick = () => {
       document.getElementById("paymentPopup").style.display = "flex";
     };
 
@@ -203,52 +242,47 @@
       document.getElementById("paymentPopup").style.display = "none";
     }
 
-    /* PAY VIA UPI APP */
+
+
+    /* --------------------------- UPI PAYMENT --------------------------- */
     function payViaUPI() {
       const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-
-      const upiID = "siddu944015-2@okaxis";
-      const upiName = "Rudhvi Vastraa";
       const label = cart.map(i => `${i.id}*${i.qty}`).join("-");
       const ref = "TXN" + Date.now();
 
       const link =
-        `upi://pay?pa=${upiID}` +
-        `&pn=${encodeURIComponent(upiName)}` +
-        `&am=${total}` +
-        `&cu=INR` +
-        `&tr=${ref}` +
-        `&tn=${encodeURIComponent(label)}`;
+        `upi://pay?pa=siddu944015-2@okaxis&pn=Rudhvi%20Vastraa&am=${total}&cu=INR&tr=${ref}&tn=${encodeURIComponent(label)}`;
 
       window.location.href = link;
 
-      // Auto WhatsApp message
-      setTimeout(() => {
-        sendWhatsAppMessage(total, label);
-      }, 2000);
+      setTimeout(() => sendWhatsAppMessage(total, label), 2000);
     }
 
-    /* SEND WHATSAPP CONFIRMATION */
+
+
+    /* ---------------------- WHATSAPP CONFIRMATION ---------------------- */
     function sendWhatsAppMessage(total, label) {
       const name = localStorage.getItem("userName") || "Customer";
 
-      let msg = `Hello Rudhvi Vastraa,%0A` +
-        `I have completed the UPI payment.%0A` +
+      const msg =
+        `Hello Rudhvi Vastraa,%0A` +
+        `Payment Completed.%0A` +
         `Name: ${name}%0A` +
-        `Order Items: ${label}%0A` +
-        `Total Paid: ₹${total}%0A`;
+        `Order: ${label}%0A` +
+        `Amount Paid: ₹${total}`;
 
       window.open(`https://wa.me/918106662341?text=${msg}`, "_blank");
     }
 
-    /* ALTERNATE WHATSAPP ORDER */
+
+
+    /* ----------------------- WHATSAPP ORDER MESSAGE ----------------------- */
     function payViaWhatsApp() {
       const name = localStorage.getItem("userName") || "Customer";
-      let msg = `Hello Rudhvi Vastraa,%0AI'm ${name}%0AI want to order:%0A`;
 
-      cart.forEach(i => {
-        msg += `${i.name} (ID:${i.id}) x${i.qty} — ₹${i.price * i.qty}%0A`;
-      });
+      let msg = `Hello Rudhvi Vastraa,%0AI'm ${name}%0AOrder:%0A`;
+
+      cart.forEach(i => msg += `${i.name} (ID:${i.id}) × ${i.qty} — ₹${i.qty * i.price}%0A`);
 
       const total = cart.reduce((s, i) => s + i.qty * i.price, 0);
       msg += `%0ATotal: ₹${total}`;
@@ -256,8 +290,12 @@
       window.open(`https://wa.me/918106662341?text=${msg}`, "_blank");
     }
 
+
+    /* INITIAL LOAD */
     renderCart();
+
   </script>
 
 </body>
+
 </html>
