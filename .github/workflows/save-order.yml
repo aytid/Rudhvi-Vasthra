@@ -1,1 +1,31 @@
+name: Save Order
 
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  repository_dispatch:
+    types: [save-order]
+
+jobs:
+  save-order:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+
+      - name: Create orders directory
+        run: mkdir -p orders
+
+      - name: Write order file
+        run: |
+          echo "${{ github.event.client_payload.orderData }}" > orders/order-${{ github.event.client_payload.orderId }}.json
+
+      - name: Commit + Push
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "New order saved"
+          branch: main
+          file_pattern: orders/
