@@ -48,9 +48,7 @@
       font-size: 14px;
     }
 
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
+    .form-group input {
       width: 100%;
       padding: 12px;
       border: 1px solid #ccc;
@@ -95,43 +93,54 @@
   <!-- NAVBAR -->
   <div class="site-nav">
     <div class="inner">
+
       <img class="logo-img" src="text-logo.png" onclick="window.location.href='index.html'" />
 
       <div class="nav-icons">
 
-        <a href="favorites.html" class="icon-btn">
-          <svg width="24" height="24" fill="none" stroke="white" stroke-width="2"
-            viewBox="0 0 24 24">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
-                     2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
-                     14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 
-                     11.54L12 21.35z" />
+        <!-- SEARCH BAR -->
+        <input type="text" id="inlineSearch" class="inline-search-input" placeholder="Type to search...">
+
+        <a href="javascript:void(0)" class="icon-btn" onclick="handleSearchClick()">
+          <svg width="24" height="24" fill="none">
+            <circle cx="11" cy="11" r="7.5" stroke="white" stroke-width="1.8"></circle>
+            <line x1="16" y1="16" x2="21" y2="21" stroke="white" stroke-width="1.8"></line>
           </svg>
         </a>
 
+        <!-- FAVORITES -->
+        <a href="favorites.html" class="icon-btn">
+          <svg width="24" height="24" fill="none" stroke="white" stroke-width="2">
+            <path
+              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
+                     4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
+                     14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
+                     c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg>
+        </a>
+
+        <!-- CART -->
         <a href="cart.html" class="icon-btn cart-btn" aria-label="Cart">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="9" cy="21" r="1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <circle cx="20" cy="21" r="1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke="#FFFFFF" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round" />
+          <svg width="24" height="24" fill="none" stroke="#fff" stroke-width="2">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6" />
           </svg>
           <span class="cart-badge" id="cartCount">0</span>
         </a>
-        
+
+        <!-- HOME -->
         <a href="index.html" class="icon-btn">
-          <svg width="24" height="24" fill="none" stroke="white" stroke-width="2"
-            viewBox="0 0 24 24">
+          <svg width="24" height="24" fill="none" stroke="white" stroke-width="2">
             <path d="M3 12L12 3L21 12" />
             <path d="M5 10v10h14V10" />
           </svg>
         </a>
-        
+
       </div>
     </div>
   </div>
+
 
   <!-- PROFILE FORM -->
   <div class="profile-container">
@@ -156,7 +165,7 @@
     </div>
 
     <div class="form-group">
-      <label>House / Flat / Door Number</label>
+      <label>House / Flat No.</label>
       <input type="text" id="house" placeholder="Ex: 2-156/1">
     </div>
 
@@ -183,8 +192,35 @@
     <button class="save-btn" onclick="saveProfile()">Save Profile</button>
   </div>
 
+
   <script>
-    // Load from localStorage on page load
+    /* ---------------- SEARCH FUNCTION ---------------- */
+    function handleSearchClick() {
+      const searchInput = document.getElementById("inlineSearch");
+
+      if (searchInput.classList.contains("active")) {
+        const q = searchInput.value.trim();
+        if (q.length > 0) {
+          window.location.href = `search.html?q=${encodeURIComponent(q)}`;
+        } else {
+          searchInput.classList.remove("active");
+        }
+      } else {
+        searchInput.classList.add("active");
+        searchInput.focus();
+      }
+    }
+
+    document.getElementById("inlineSearch").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        const q = this.value.trim();
+        if (q.length > 0)
+          window.location.href = `search.html?q=${encodeURIComponent(q)}`;
+      }
+    });
+
+
+    /* ---------------- LOAD PROFILE ---------------- */
     window.onload = () => {
       const fields = ["fullName", "phone", "email", "house", "street", "city", "state", "pincode"];
       fields.forEach(id => {
@@ -192,7 +228,8 @@
       });
     };
 
-    // Save profile
+
+    /* ---------------- SAVE PROFILE ---------------- */
     function saveProfile() {
       const fields = ["fullName", "phone", "email", "house", "street", "city", "state", "pincode"];
 
@@ -200,7 +237,6 @@
         localStorage.setItem(id, document.getElementById(id).value.trim());
       });
 
-      // Also store userName for checkout
       localStorage.setItem("userName", document.getElementById("fullName").value.trim());
 
       const msg = document.getElementById("successMsg");
