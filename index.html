@@ -317,24 +317,23 @@ async function submitFeedback() {
     ts: Date.now()
   };
 
-  // send to GitHub workflow
-  await fetch("https://api.github.com/repos/aytid/Rudhvi-Vasthra/dispatches", {
+  // CREATE GITHUB ISSUE (NO TOKEN NEEDED)
+  await fetch("https://api.github.com/repos/aytid/Rudhvi-Vasthra/issues", {
     method: "POST",
     headers: {
-      "Accept": "application/vnd.github.everest-preview+json",
+      "Accept": "application/vnd.github+json",
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      event_type: "save-feedback",
-      client_payload: {
-        data: JSON.stringify(payload)
-      }
+      title: "New Feedback",
+      body: JSON.stringify(payload)
     })
   });
 
   fbMessageInput.value = "";
   showToast("Thanks for the feedback!");
 }
+
 
 async function loadFeedbacks() {
   try {
