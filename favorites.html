@@ -54,17 +54,15 @@
           </svg>
         </a>
 
-                <a href="profile.html" class="icon-btn" aria-label="Profile">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-       xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="7" r="4" stroke="#FFFFFF" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M4 21c0-4 4-7 8-7s8 3 8 7" 
-          stroke="#FFFFFF" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</a>
-        
+        <a href="profile.html" class="icon-btn" aria-label="Profile">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="7" r="4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M4 21c0-4 4-7 8-7s8 3 8 7" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </a>
+
       </div>
     </div>
 
@@ -199,7 +197,7 @@
       t.className = 'toast show'; // Add 'show' class to ensure visibility
       t.id = 'toast';             // Add ID because your CSS likely targets #toast
       t.textContent = msg;
-      
+
       document.body.appendChild(t);
 
       // 3. Remove it after 3 seconds
@@ -210,8 +208,7 @@
 
     function handleSearchClick() {
       const searchInput = document.getElementById("inlineSearch");
-
-      // If already active → search
+      // Check if active
       if (searchInput.classList.contains("active")) {
         const query = searchInput.value.trim();
         if (query.length > 0) {
@@ -220,13 +217,11 @@
           searchInput.classList.remove("active");
         }
       } else {
-        // Activate search box
         searchInput.classList.add("active");
         searchInput.focus();
       }
     }
 
-    // ENTER key triggers search
     document.getElementById("inlineSearch").addEventListener("keypress", function (event) {
       if (event.key === "Enter") {
         const query = this.value.trim();
@@ -235,6 +230,7 @@
         }
       }
     });
+
 
     window.onload = () => {
       updateCartCount();

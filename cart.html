@@ -385,7 +385,30 @@
     function goToDetails(id) {
       window.location.href = `product-details.html?id=${id}`;
     }
+    function handleSearchClick() {
+      const searchInput = document.getElementById("inlineSearch");
+      // Check if active
+      if (searchInput.classList.contains("active")) {
+        const query = searchInput.value.trim();
+        if (query.length > 0) {
+          window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+        } else {
+          searchInput.classList.remove("active");
+        }
+      } else {
+        searchInput.classList.add("active");
+        searchInput.focus();
+      }
+    }
 
+    document.getElementById("inlineSearch").addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        const query = this.value.trim();
+        if (query.length > 0) {
+          window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+        }
+      }
+    });
   </script>
 
 </body>

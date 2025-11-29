@@ -56,15 +56,13 @@
         </a>
 
         <a href="profile.html" class="icon-btn" aria-label="Profile">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-       xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="7" r="4" stroke="#FFFFFF" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M4 21c0-4 4-7 8-7s8 3 8 7" 
-          stroke="#FFFFFF" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</a>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="7" r="4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M4 21c0-4 4-7 8-7s8 3 8 7" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </a>
 
       </div>
     </div>
@@ -99,8 +97,8 @@
       <p class="about-text fade-left">
         We take pride in curating a diverse and exquisite collection that speaks the language of grace. From the regal
         grandeur of authentic Kanjivaram Silks and the majestic opulence of Banarasi
-          Zari to the subtle sophistication of Handloom Cottons, breezy Chiffons, and festive
-          Georgettes— every piece in our store is handpicked for its quality, weave, and artistry.
+        Zari to the subtle sophistication of Handloom Cottons, breezy Chiffons, and festive
+        Georgettes— every piece in our store is handpicked for its quality, weave, and artistry.
       </p>
 
       <p class="about-text fade-left">
@@ -203,14 +201,14 @@
     // ];
 
 
-function showToast(msg) {
-  const t = document.createElement('div');
-  t.className = 'toast';
-  t.textContent = msg;
-  document.body.appendChild(t);
+    function showToast(msg) {
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.textContent = msg;
+      document.body.appendChild(t);
 
-  setTimeout(() => t.remove(), 2500);
-}
+      setTimeout(() => t.remove(), 2500);
+    }
 
     function renderSarees() {
       sareeGrid.innerHTML = sarees.map((s, i) => {
@@ -282,19 +280,19 @@ function showToast(msg) {
       renderSarees();
     }
 
-function addToCart(id) {
-  const s = sarees.find(item => item.id === id);
-  if (!s) return;
+    function addToCart(id) {
+      const s = sarees.find(item => item.id === id);
+      if (!s) return;
 
-  let existing = cart.find(c => c.id === id);
+      let existing = cart.find(c => c.id === id);
 
-  if (existing) existing.qty++;
-  else cart.push({ ...s, qty: 1 });
+      if (existing) existing.qty++;
+      else cart.push({ ...s, qty: 1 });
 
-  localStorage.setItem("cart", JSON.stringify(cart));
-  updateCartCount();
-  showToast(`${s.name} added to cart`);
-}
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      showToast(`${s.name} added to cart`);
+    }
 
 
     function greetUser() { if (userName) greeting.innerHTML = `Hi, ${escapeHtml(userName)}!<br>Welcome to`; }
@@ -308,72 +306,72 @@ function addToCart(id) {
       greetUser();
       showToast(`Welcome, ${userName}!`);
     }
-async function submitFeedback() {
-  const message = fbMessageInput.value.trim();
-  if (!message) {
-    showToast("Please write feedback!");
-    return;
-  }
+    async function submitFeedback() {
+      const message = fbMessageInput.value.trim();
+      if (!message) {
+        showToast("Please write feedback!");
+        return;
+      }
 
-  const payload = {
-    name: userName || "Guest",
-    message: message,
-    ts: Date.now()
-  };
+      const payload = {
+        name: userName || "Guest",
+        message: message,
+        ts: Date.now()
+      };
 
-  try {
-    const res = await fetch("https://rudhvi-vastraa.adityathirumala20.workers.dev", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
+      try {
+        const res = await fetch("https://rudhvi-vastraa.adityathirumala20.workers.dev", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
 
-    if (!res.ok) {
-      showToast("Error sending feedback");
-      console.error(await res.text());
-      return;
+        if (!res.ok) {
+          showToast("Error sending feedback");
+          console.error(await res.text());
+          return;
+        }
+
+        fbMessageInput.value = "";
+        showToast("Thanks for the feedback!");
+
+        // 🟢 Refresh feedback list after sending
+        await loadFeedbacks();
+
+      } catch (err) {
+        console.error(err);
+        showToast("Network error");
+      }
     }
 
-    fbMessageInput.value = "";
-    showToast("Thanks for the feedback!");
 
-    // 🟢 Refresh feedback list after sending
-    await loadFeedbacks();
+    async function loadFeedbacks() {
+      try {
+        // 🟢 Cache-busting to force fresh data from GitHub
+        const url = "https://raw.githubusercontent.com/aytid/Rudhvi-Vasthra/main/feedback.json?ts=" + Date.now();
 
-  } catch (err) {
-    console.error(err);
-    showToast("Network error");
-  }
-}
+        const res = await fetch(url, { cache: "no-store" });
+        feedbacks = await res.json();
 
-
-async function loadFeedbacks() {
-  try {
-    // 🟢 Cache-busting to force fresh data from GitHub
-    const url = "https://raw.githubusercontent.com/aytid/Rudhvi-Vasthra/main/feedback.json?ts=" + Date.now();
-
-    const res = await fetch(url, { cache: "no-store" });
-    feedbacks = await res.json();
-
-    renderFeedbacks();
-  } catch (err) {
-    console.error("Failed to load feedback:", err);
-  }
-}
+        renderFeedbacks();
+      } catch (err) {
+        console.error("Failed to load feedback:", err);
+      }
+    }
 
 
-function renderFeedbacks() {
-  if (!feedbacks.length) {
-    feedbackListEl.innerHTML = `
+    function renderFeedbacks() {
+      if (!feedbacks.length) {
+        feedbackListEl.innerHTML = `
       <div style="color:#666;padding:8px 0">No feedback yet — be the first!</div>
     `;
-    return;
-  }
+        return;
+      }
 
-  feedbackListEl.innerHTML = feedbacks
-    .slice()
-    .reverse()
-    .map(f => `
+      feedbackListEl.innerHTML = feedbacks
+        .slice()
+        .reverse()
+        .map(f => `
       <div class="feedback-item">
         <div class="meta">
           <strong>${escapeHtml(f.name)}</strong> · ${new Date(f.ts).toLocaleString()}
@@ -381,8 +379,8 @@ function renderFeedbacks() {
         <div class="msg">${escapeHtml(f.message)}</div>
       </div>
     `)
-    .join('');
-}
+        .join('');
+    }
 
 
 
@@ -434,14 +432,14 @@ function renderFeedbacks() {
 
     function escapeHtml(str) { return String(str).replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[s])); }
 
-window.onload = async () => {
-  document.getElementById('year').textContent = new Date().getFullYear();
-  renderSarees();
-  updateCartCount();
-  await loadFeedbacks();
-  if (userName) greetUser();
-  else popup.style.display = 'flex';
-};
+    window.onload = async () => {
+      document.getElementById('year').textContent = new Date().getFullYear();
+      renderSarees();
+      updateCartCount();
+      await loadFeedbacks();
+      if (userName) greetUser();
+      else popup.style.display = 'flex';
+    };
 
 
     document.addEventListener("DOMContentLoaded", () => {

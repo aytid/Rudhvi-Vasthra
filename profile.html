@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Profile — Rudhvi Vastraa</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/png" href="img-logo-removebg.png">
 
@@ -118,7 +120,8 @@
     }
 
     /* TOASTS */
-    .toast-error, .toast-success {
+    .toast-error,
+    .toast-success {
       position: fixed;
       bottom: 20px;
       left: 50%;
@@ -131,14 +134,34 @@
       z-index: 9999;
     }
 
-    .toast-error { background: #E62727; }
-    .toast-success { background: #13a113; }
+    .toast-error {
+      background: #E62727;
+    }
+
+    .toast-success {
+      background: #13a113;
+    }
 
     @keyframes fadeInOut {
-      0% { opacity: 0; bottom: 0; }
-      20% { opacity: 1; bottom: 20px; }
-      80% { opacity: 1; bottom: 20px; }
-      100% { opacity: 0; bottom: 0; }
+      0% {
+        opacity: 0;
+        bottom: 0;
+      }
+
+      20% {
+        opacity: 1;
+        bottom: 20px;
+      }
+
+      80% {
+        opacity: 1;
+        bottom: 20px;
+      }
+
+      100% {
+        opacity: 0;
+        bottom: 0;
+      }
     }
   </style>
 </head>
@@ -148,7 +171,7 @@
   <!-- NAVBAR -->
   <div class="site-nav">
     <div class="inner">
-      <img class="logo-img" src="text-logo.png" onclick="window.location.href='index.html'"/>
+      <img class="logo-img" src="text-logo.png" onclick="window.location.href='index.html'" />
 
       <div class="nav-icons">
         <input type="text" id="inlineSearch" class="inline-search-input" placeholder="Type to search...">
@@ -165,23 +188,23 @@
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
                      2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 
                      14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
-                     c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                     c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
           </svg>
         </a>
 
         <a href="cart.html" class="icon-btn cart-btn">
           <svg width="24" height="24" fill="none" stroke="#fff" stroke-width="2">
-            <circle cx="9" cy="21" r="1"/>
-            <circle cx="20" cy="21" r="1"/>
-            <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/>
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6" />
           </svg>
           <span class="cart-badge" id="cartCount">0</span>
         </a>
 
         <a href="index.html" class="icon-btn">
           <svg width="24" height="24" fill="none" stroke="white" stroke-width="2">
-            <path d="M3 12L12 3L21 12"/>
-            <path d="M5 10v10h14V10"/>
+            <path d="M3 12L12 3L21 12" />
+            <path d="M5 10v10h14V10" />
           </svg>
         </a>
 
@@ -286,7 +309,7 @@
 
     /* MAKE ALL INPUTS READONLY OR ACTIVE */
     function setReadOnly(state) {
-      const fields = ["fullName","phone","email","house","street","city","state","pincode"];
+      const fields = ["fullName", "phone", "email", "house", "street", "city", "state", "pincode"];
       fields.forEach(id => {
         const input = document.getElementById(id);
         input.readOnly = state;
@@ -298,7 +321,7 @@
 
     /* LOAD PROFILE */
     window.onload = () => {
-      const fields = ["fullName","phone","email","house","street","city","state","pincode"];
+      const fields = ["fullName", "phone", "email", "house", "street", "city", "state", "pincode"];
       fields.forEach(id => document.getElementById(id).value = localStorage.getItem(id) || "");
 
       const userName = localStorage.getItem("userName");
@@ -331,7 +354,7 @@
 
     /* SAVE PROFILE */
     function saveProfileValues() {
-      const ids = ["fullName","phone","email","house","street","city","state","pincode"];
+      const ids = ["fullName", "phone", "email", "house", "street", "city", "state", "pincode"];
 
       for (let id of ids) {
         if (!document.getElementById(id).value.trim()) {
@@ -353,9 +376,9 @@
 
     /* CLEAR PROFILE */
     function clearProfileData() {
-      const ids = ["fullName","phone","email","house","street","city","state","pincode","userName"];
+      const ids = ["fullName", "phone", "email", "house", "street", "city", "state", "pincode", "userName"];
       ids.forEach(id => localStorage.removeItem(id));
-      ids.slice(0,8).forEach(id => document.getElementById(id).value = "");
+      ids.slice(0, 8).forEach(id => document.getElementById(id).value = "");
 
       document.getElementById("greetingMsg").textContent = "Hi, please fill your details.";
       showError("Profile cleared");
@@ -398,15 +421,40 @@
     /* CART BADGE */
     function updateCartCount() {
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const count = cart.reduce((sum,item)=>sum+item.qty,0);
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
 
       const badge = document.getElementById("cartCount");
       if (badge) {
         badge.textContent = count;
-        badge.style.display = count>0 ? "flex" : "none";
+        badge.style.display = count > 0 ? "flex" : "none";
       }
     }
+    function handleSearchClick() {
+      const searchInput = document.getElementById("inlineSearch");
+      // Check if active
+      if (searchInput.classList.contains("active")) {
+        const query = searchInput.value.trim();
+        if (query.length > 0) {
+          window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+        } else {
+          searchInput.classList.remove("active");
+        }
+      } else {
+        searchInput.classList.add("active");
+        searchInput.focus();
+      }
+    }
+
+    document.getElementById("inlineSearch").addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        const query = this.value.trim();
+        if (query.length > 0) {
+          window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+        }
+      }
+    });
   </script>
 
 </body>
+
 </html>
