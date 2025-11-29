@@ -4,15 +4,15 @@ window.sarees = [
     name:"Soft Pink Gadwal Silk",
     desc:"Pastel pink with zari buttas and contrast Kanchi border.",
     price:22500,
-    image:"pink-gadwal.jpg",
+    image:"pic1.jpg",
     soldOut:true,
 
     images: [
-      "pink-gadwal.jpg",
-      "traditional.jpg",
-      "designer.jpg",
-      "casual.jpg",
-      "pink-gadwal.jpg"
+      "pic1.jpg",
+      "pic2.webp",
+      "pic3.webp",
+      "pic4.jpg",
+      "pic5.jpg"
     ],
 
     maker: "Woven by expert Gadwal weavers who specialize in contrast Kanchi borders.",
