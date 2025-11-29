@@ -336,6 +336,17 @@ async function submitFeedback() {
   showToast("Thanks for the feedback!");
 }
 
+async function loadFeedbacks() {
+  try {
+    const res = await fetch("https://raw.githubusercontent.com/aytid/Rudhvi-Vasthra/main/feedback.json");
+    feedbacks = await res.json();
+    renderFeedbacks();
+  } catch (err) {
+    console.error("Failed to load feedback:", err);
+  }
+}
+
+
     function clearFeedbackForm() { fbMessageInput.value = ''; }
 
     // --- SEARCH FUNCTIONALITY ---
@@ -381,11 +392,15 @@ async function submitFeedback() {
 
     function escapeHtml(str) { return String(str).replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[s])); }
 
-    window.onload = () => {
-      document.getElementById('year').textContent = new Date().getFullYear();
-      renderSarees(); updateCartCount(); renderFeedbacks();
-      if (userName) { greetUser(); } else popup.style.display = 'flex';
-    };
+window.onload = async () => {
+  document.getElementById('year').textContent = new Date().getFullYear();
+  renderSarees();
+  updateCartCount();
+  await loadFeedbacks();
+  if (userName) greetUser();
+  else popup.style.display = 'flex';
+};
+
 
     document.addEventListener("DOMContentLoaded", () => {
       const elements = document.querySelectorAll(".fade-up, .fade-down, .fade-left, .fade-right");
