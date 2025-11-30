@@ -14,6 +14,7 @@
   <link rel="icon" type="image/png" href="img-logo-removebg.png">
 
   <script src="https://cdn.jsdelivr.net/npm/qrious/dist/qrious.min.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <style>
     /* Toast */
@@ -348,18 +349,45 @@
       });
     }
 
-    function payViaUPI() {
-      const total = cart.reduce((s, i) => s + i.qty * i.price, 0);
-      const orderLabel = cart.map(i => `${i.id}*${i.qty}`).join("-");
-      const ref = "TXN" + Date.now();
+function payViaUPI() {
 
-      const link =
-        `upi://pay?pa=siddu944015-2@okaxis&pn=Rudhvi%20Vastraa&am=${total}&cu=INR&tr=${ref}&tn=${encodeURIComponent(orderLabel)}`;
+    const total = cart.reduce((s, i) => s + i.qty * i.price, 0);
+    const orderLabel = cart.map(i => `${i.id}*${i.qty}`).join("-");
+    const customerName = localStorage.getItem("userName") || "Customer";
 
-      window.location.href = link;
+    var options = {
+        "key": "rzp_live_Rm0jM0TPWo554c",  
+        "amount": total * 100,             
+        "currency": "INR",
+        "name": "Rudhvi Vastraa",
+        "description": "Order Payment",
+        "image": "text-logo.png",
+        "handler": function (response) {
 
-      setTimeout(() => sendWhatsAppConfirm(total, orderLabel), 1500);
-    }
+            let msg =
+                `Hello,%0A%0APayment successful!%0A` +
+                `Name: ${customerName}%0A` +
+                `Order: ${orderLabel}%0A` +
+                `Amount: ₹${total}%0A` +
+                `Payment ID: ${response.razorpay_payment_id}`;
+
+            window.open(`https://wa.me/918106662341?text=${msg}`, "_blank");
+        },
+        
+        "prefill": {
+            "name": customerName,
+            "email": localStorage.getItem("email") || "customer@example.com",
+            "contact": localStorage.getItem("phone") || "9999999999"
+        },
+
+        "theme": {
+            "color": "#E62727"
+        }
+    };
+
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+}
 
     function sendWhatsAppConfirm(total, label) {
       const name = localStorage.getItem("userName") || "Customer";
