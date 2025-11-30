@@ -362,17 +362,39 @@ function payViaUPI() {
         "name": "Rudhvi Vastraa",
         "description": "Order Payment",
         "image": "text-logo.png",
-        "handler": function (response) {
+"handler": async function (response) {
 
-            let msg =
-                `Hello,%0A%0APayment successful!%0A` +
-                `Name: ${customerName}%0A` +
-                `Order: ${orderLabel}%0A` +
-                `Amount: ₹${total}%0A` +
-                `Payment ID: ${response.razorpay_payment_id}`;
+    const customerName = localStorage.getItem("userName") || "Customer";
+    const customerPhone = localStorage.getItem("phone") || "";
+    const ownerPhone = "+91XXXXXXXXXX"; // YOUR NUMBER
 
-            window.open(`https://wa.me/918106662341?text=${msg}`, "_blank");
-        },
+    const orderDetails = cart.map(i =>
+      `${i.name} × ${i.qty} — ₹${i.qty * i.price}`
+    ).join("\n");
+
+    const total = cart.reduce((s, i) => s + i.qty * i.price, 0);
+
+    const smsMessage =
+      `New Order Received\n\n` +
+      `Name: ${customerName}\n` +
+      `Phone: ${customerPhone}\n\n` +
+      `Items:\n${orderDetails}\n\n` +
+      `Total: ₹${total}\n` +
+      `Payment ID: ${response.razorpay_payment_id}`;
+
+    // SEND SMS TO OWNER USING CLOUDFLARE WORKER
+    await fetch("https://your-worker.yourname.workers.dev", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        to: ownerPhone,
+        message: smsMessage
+      })
+    });
+
+    alert("Order SMS sent to owner!");
+}
+
         
         "prefill": {
             "name": customerName,
