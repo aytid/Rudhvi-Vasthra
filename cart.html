@@ -33,32 +33,14 @@
     }
 
     @keyframes fadeInOut {
-      0% {
-        opacity: 0;
-        bottom: 0;
-      }
-
-      20% {
-        opacity: 1;
-        bottom: 20px;
-      }
-
-      80% {
-        opacity: 1;
-        bottom: 20px;
-      }
-
-      100% {
-        opacity: 0;
-        bottom: 0;
-      }
+      0%,100% { opacity: 0; bottom: 0; }
+      20%,80% { opacity: 1; bottom: 20px; }
     }
 
     /* PAYMENT CONTAINER */
     #paymentContainer {
       display: flex;
       justify-content: space-between;
-      align-items: stretch;
       gap: 25px;
       margin-top: 25px;
       padding: 25px;
@@ -75,23 +57,10 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
-    .pay-left h2 {
-      margin: 0;
-      font-size: 26px;
-      font-weight: 700;
-      color: #222;
-    }
-
     .pay-right {
       width: 60%;
       display: flex;
       flex-direction: column;
-      gap: 15px;
-    }
-
-    .pay-right-buttons {
-      display: flex;
-      justify-content: space-between;
       gap: 15px;
     }
 
@@ -106,55 +75,21 @@
       font-weight: 600;
       cursor: pointer;
       transition: 0.25s ease;
-      text-align: center;
     }
 
-    .payBtn:hover {
-      background: #c41f1f;
-      transform: translateY(-2px);
-    }
+    .payBtn:hover { background: #c41f1f; transform: translateY(-2px); }
 
-    .whatsappBtn {
-      background: #25D366 !important;
-    }
-
-    .whatsappBtn:hover {
-      background: #1ea756 !important;
-    }
+    .whatsappBtn { background: #25D366 !important; }
+    .whatsappBtn:hover { background: #1ea756 !important; }
 
     #dynamicQRBox {
-      width: 100%;
-      text-align: center;
       background: white;
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      text-align: center;
     }
 
-    #dynamicQRBox h3 {
-      margin-bottom: 12px;
-      font-size: 18px;
-      font-weight: 600;
-    }
-
-    @media(max-width: 768px) {
-      #paymentContainer {
-        flex-direction: column;
-      }
-
-      .pay-left,
-      .pay-right {
-        width: 100%;
-      }
-
-      .pay-right-buttons {
-        flex-direction: column;
-      }
-
-      .payBtn {
-        width: 100%;
-      }
-    }
   </style>
 </head>
 
@@ -163,7 +98,6 @@
   <!-- NAVBAR -->
   <div class="site-nav">
     <div class="inner">
-
       <img class="logo-img" src="text-logo.png" onclick="window.location.href='index.html'" />
 
       <div class="nav-icons">
@@ -234,13 +168,11 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer>© <span id="year"></span> Rudhvi Vastraa — All rights reserved</footer>
 
   <script>
 
     document.getElementById("year").textContent = new Date().getFullYear();
-
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     function renderCart() {
@@ -256,30 +188,27 @@
       document.getElementById("cartFooter").style.display = "block";
 
       list.innerHTML = cart.map((item, i) => `
-  <div class="tile">
+        <div class="tile">
+          <div class="img-wrapper" onclick="goToDetails('${item.id}')">
+            <img src="${item.image}">
+          </div>
 
-    <div class="img-wrapper" onclick="goToDetails('${item.id}')">
-      <img src="${item.image}">
-    </div>
+          <div class="tile-content" onclick="goToDetails('${item.id}')">
+            <h3>${item.name}</h3>
+            <p>ID: ${item.id}</p>
+            <p><strong>₹${item.price}</strong></p>
+          </div>
 
-    <div class="tile-content" onclick="goToDetails('${item.id}')">
-      <h3>${item.name}</h3>
-      <p>ID: ${item.id}</p>
-      <p><strong>₹${item.price}</strong></p>
-    </div>
-
-    <div class="tile-actions">
-      <button class="qty-btn" onclick="changeQty(${i}, -1)">−</button>
-      <span>${item.qty}</span>
-      <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
-    </div>
-
-  </div>
-`).join("");
+          <div class="tile-actions">
+            <button class="qty-btn" onclick="changeQty(${i}, -1)">−</button>
+            <span>${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
+          </div>
+        </div>
+      `).join("");
 
       const total = cart.reduce((sum, x) => sum + x.qty * x.price, 0);
       totalEl.innerHTML = `<h2>Total: ₹${total.toLocaleString()}</h2>`;
-
       generateQR();
     }
 
@@ -294,12 +223,8 @@
       const total = cart.reduce((s, i) => s + i.qty * i.price, 0);
       if (total <= 0) return;
 
-      const upiID = "siddu944015-2@okaxis";
-      const upiName = "Rudhvi Vastraa";
-      const orderLabel = cart.map(i => `${i.id}*${i.qty}`).join("-");
-
       const upiLink =
-        `upi://pay?pa=${upiID}&pn=${encodeURIComponent(upiName)}&am=${total}&cu=INR&tn=${encodeURIComponent(orderLabel)}`;
+        `upi://pay?pa=siddu944015-2@okaxis&pn=Rudhvi%20Vastraa&am=${total}&cu=INR`;
 
       new QRious({
         element: document.getElementById("upiQR"),
@@ -338,24 +263,28 @@
           const total = cart.reduce((s, i) => s + i.qty * i.price, 0);
 
           const smsMessage =
-            `New Order Received\n\n` +
-            `Name: ${customerName}\n` +
-            `Phone: ${customerPhone}\n\n` +
-            `Items:\n${orderDetails}\n\n` +
-            `Total: ₹${total}\n` +
-            `Payment ID: ${response.razorpay_payment_id}`;
+            `New Order Received\n\nName: ${customerName}\nPhone: ${customerPhone}\n\nItems:\n${orderDetails}\n\nTotal: ₹${total}\nPayment ID: ${response.razorpay_payment_id}`;
 
-          // Send SMS using Cloudflare Worker
-          await fetch("https://rudhvi-vastraa.adityathirumala20.workers.dev/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              to: ownerPhone,
-              message: smsMessage
-            })
-          });
+          try {
+            const res = await fetch("https://rudhvi-vastraa.adityathirumala20.workers.dev", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                to: ownerPhone,
+                message: smsMessage
+              })
+            });
 
-          alert("Order SMS sent to owner!");
+            if (res.ok) {
+              alert("Order received! SMS sent to owner ✔️");
+            } else {
+              alert("Payment done, but SMS failed ❌");
+            }
+
+          } catch (err) {
+            alert("Payment received, but SMS worker error ❌");
+            console.error(err);
+          }
         },
 
         "prefill": {
@@ -364,9 +293,7 @@
           "contact": localStorage.getItem("phone") || "9999999999"
         },
 
-        "theme": {
-          "color": "#E62727"
-        }
+        "theme": { "color": "#E62727" }
       };
 
       var rzp1 = new Razorpay(options);
@@ -387,9 +314,7 @@
 
     renderCart();
 
-    function goToDetails(id) {
-      window.location.href = `product-details.html?id=${id}`;
-    }
+    function goToDetails(id) { window.location.href = `product-details.html?id=${id}`; }
 
     function handleSearchClick() {
       const searchInput = document.getElementById("inlineSearch");
@@ -406,14 +331,15 @@
       }
     }
 
-    document.getElementById("inlineSearch").addEventListener("keypress", function (event) {
-      if (event.key === "Enter") {
-        const query = this.value.trim();
-        if (query.length > 0) {
-          window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+    document.getElementById("inlineSearch")
+      .addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          const query = this.value.trim();
+          if (query.length > 0) {
+            window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+          }
         }
-      }
-    });
+      });
 
   </script>
 
